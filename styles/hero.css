@@ -1,0 +1,16 @@
+.hero {
+  width: 90%;
+  margin-left: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-right: auto;
+}
+
+.heroheader {
+  max-width: 645px;
+  min-height: 174px;
+  font-size: 64px;
+  font-weight: 700;
+  color: #2b2b2b;
+}

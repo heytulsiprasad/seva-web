@@ -3,6 +3,7 @@ import '../styles/globals.css'
 import '../styles/navbar.css'
 import '../styles/footer.css'
 import '../styles/infocards.css'
+import '../styles/hero.css'
 
 import styled from 'styled-components'
 
