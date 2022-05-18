@@ -1,0 +1,15 @@
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-evenly;
+  background-color: #262f41;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.footername {
+  color: #ffffff;
+  font-size: 36px;
+  font-weight: bolder;
+}
