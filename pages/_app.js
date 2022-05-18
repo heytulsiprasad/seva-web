@@ -2,6 +2,7 @@ import Layout from '../components/Layout'
 import '../styles/globals.css'
 import '../styles/navbar.css'
 import '../styles/footer.css'
+import '../styles/infocards.css'
 
 import styled from 'styled-components'
 
