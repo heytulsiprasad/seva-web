@@ -1,6 +1,6 @@
 const Footer = () => {
     return (
-        <div className="footer">
+        <footer className="footer" style={{ alignSelf: "flex-end"}}>
             <div>
                 <div className="footername">Seva<span style={{ color: '#FF792E' }}>.</span></div>
                 <div className="" style={{ color: '#8F8F8F', width: 200, fontSize: 16, fontWeight: '600' }}>Seva is serving you for your benefit</div>
@@ -22,7 +22,7 @@ const Footer = () => {
             <div style={{ width: 320, height: 200, backgroundColor: '#2B3852' }}>
 
             </div>
-        </div>
+        </footer>
     )
 }
 

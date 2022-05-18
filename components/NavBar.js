@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const NavBar = () => {
     const [isNavExpanded, setIsNavExpanded] = useState(false);
     return (
-        <nav className="navigation">
+        <nav className="navigation" style={{ alignSelf: "flex-start" }}>
             <a href="/" className="brand-name" style={{ fontWeight: '800', fontFamily: 'sans-serif', fontSize: 20, color: '#3D7FFF' }}>
                 Seva<span style={{ color: '#FF792E' }}>.</span>
             </a>
