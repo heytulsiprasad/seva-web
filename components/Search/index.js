@@ -1,13 +1,19 @@
 import React from 'react'
-import { Input, Badge, Select } from '@mantine/core'
+import { Input, Badge, Select, Text } from '@mantine/core'
 import { Search, Filter } from 'tabler-icons-react'
 
 // styles
-import { SearchBox, SelectBox, InputBox } from './style'
+import {
+  SearchBox,
+  SelectBox,
+  InputBox,
+  UserControls,
+  SearchMetadata,
+} from './style'
 
-const SearchComponent = () => {
+const SearchComponent = ({ searchBy, setSearchBy }) => {
   return (
-    <SearchBox>
+    <UserControls>
       <InputBox>
         <Input
           size="lg"
@@ -21,16 +27,17 @@ const SearchComponent = () => {
           placeholder="Filter By"
           size="lg"
           radius="md"
+          value={searchBy}
+          onChange={setSearchBy}
           icon={<Filter size={24} strokeWidth={1} />}
           data={[
             { value: 'all', label: 'All' },
             { value: 'hospital', label: 'Hospitals' },
             { value: 'doctor', label: 'Doctors' },
-            { value: 'pricing', label: 'Pricing' },
           ]}
         />
       </SelectBox>
-    </SearchBox>
+    </UserControls>
   )
 }
 
