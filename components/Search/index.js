@@ -1,22 +1,37 @@
 import React from 'react'
-import { Input, Badge } from '@mantine/core'
-import { BrandTwitter } from 'tabler-icons-react'
+import { Input, Badge, Select } from '@mantine/core'
+import { Search, Filter } from 'tabler-icons-react'
 
-const Search = () => {
+// styles
+import { SearchBox, SelectBox, InputBox } from './style'
+
+const SearchComponent = () => {
   return (
-    // <Input
-    //   icon={<BrandTwitter size={16} />}
-    //   placeholder="Your social media"
-    //   rightSectionWidth={70}
-    //   styles={{ rightSection: { pointerEvents: 'none' } }}
-    //   rightSection={
-    //     <Badge color="blue" variant="filled">
-    //       Bhubaneswar
-    //     </Badge>
-    //   }
-    // />
-    <></>
+    <SearchBox>
+      <InputBox>
+        <Input
+          size="lg"
+          radius="md"
+          icon={<Search size={24} strokeWidth={1} />}
+          placeholder="Search for doctors or hospitals near by"
+        />
+      </InputBox>
+      <SelectBox>
+        <Select
+          placeholder="Filter By"
+          size="lg"
+          radius="md"
+          icon={<Filter size={24} strokeWidth={1} />}
+          data={[
+            { value: 'all', label: 'All' },
+            { value: 'hospital', label: 'Hospitals' },
+            { value: 'doctor', label: 'Doctors' },
+            { value: 'pricing', label: 'Pricing' },
+          ]}
+        />
+      </SelectBox>
+    </SearchBox>
   )
 }
 
-export default Search
+export default SearchComponent
