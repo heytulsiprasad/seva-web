@@ -1,8 +1,11 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
+import { Button } from '@mantine/core'
+
 const NavBar = () => {
   const [isNavExpanded, setIsNavExpanded] = useState(false)
+
   return (
     <nav className="navigation" style={{ alignSelf: 'flex-start' }}>
       <Link href="/">
@@ -45,29 +48,37 @@ const NavBar = () => {
       >
         <ul>
           <li>
-            <a style={{ fontSize: 14, paddingTop: 10 }} href="/home">
-              Doctors
-            </a>
+            <Button variant="subtle" color="dark">
+              <Link style={{ fontSize: 14, paddingTop: 10 }} href="/home">
+                Doctors
+              </Link>
+            </Button>
           </li>
           <li>
-            <a style={{ fontSize: 14, paddingTop: 10 }} href="/about">
-              Hospitals
-            </a>
+            <Button variant="subtle" color="dark">
+              <Link style={{ fontSize: 14, paddingTop: 10 }} href="/about">
+                Hospitals
+              </Link>
+            </Button>
           </li>
           <li>
-            <a style={{ fontSize: 14, paddingTop: 10 }} href="/contact">
-              About Us
-            </a>
+            <Button variant="subtle" color="dark">
+              <Link style={{ fontSize: 14, paddingTop: 10 }} href="/contact">
+                About Us
+              </Link>
+            </Button>
           </li>
           <li>
-            <a style={{ fontSize: 14, paddingTop: 10 }} href="/contact">
-              Log In
-            </a>
+            <Button variant="subtle" color="orange">
+              <Link style={{ fontSize: 14, paddingTop: 10 }} href="/contact">
+                Log In
+              </Link>
+            </Button>
           </li>
           <li>
-            <div className="speciallia">
-              <a href="/contact">Sign Up</a>
-            </div>
+            <Button color="orange">
+              <Link href="/contact">Sign Up</Link>
+            </Button>
           </li>
         </ul>
       </div>
