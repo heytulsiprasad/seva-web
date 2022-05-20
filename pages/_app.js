@@ -6,6 +6,7 @@ import '../styles/infocards.css'
 import '../styles/hero.css'
 
 import styled from 'styled-components'
+import { MantineProvider } from '@mantine/core'
 
 const Container = styled.main`
   flex: 1;
@@ -13,11 +14,20 @@ const Container = styled.main`
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Layout>
-      <Container>
-        <Component {...pageProps} />
-      </Container>
-    </Layout>
+    <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
+      theme={{
+        /** Put your mantine theme override here */
+        colorScheme: 'light',
+      }}
+    >
+      <Layout>
+        <Container>
+          <Component {...pageProps} />
+        </Container>
+      </Layout>
+    </MantineProvider>
   )
 }
 
