@@ -12,11 +12,10 @@ const Left = styled(Box)`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  flex-basis: 40%;
 `
 
-const Right = styled(Box)`
-  flex-basis: 60%;
-`
+const Right = styled(Box)``
 
 const Hero = { Container, Left, Right }
 
