@@ -7,6 +7,7 @@ import '../styles/hero.css'
 
 import styled from 'styled-components'
 import { MantineProvider } from '@mantine/core'
+import { NotificationsProvider } from '@mantine/notifications'
 
 const Container = styled.main`
   flex: 1;
@@ -22,11 +23,13 @@ function MyApp({ Component, pageProps }) {
         colorScheme: 'light',
       }}
     >
-      <Layout>
-        <Container>
-          <Component {...pageProps} />
-        </Container>
-      </Layout>
+      <NotificationsProvider>
+        <Layout>
+          <Container>
+            <Component {...pageProps} />
+          </Container>
+        </Layout>
+      </NotificationsProvider>
     </MantineProvider>
   )
 }

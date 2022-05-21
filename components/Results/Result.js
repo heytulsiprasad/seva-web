@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Text, Button, Box } from '@mantine/core'
 import { Star } from 'tabler-icons-react'
 import getSymbolFromCurrency from 'currency-symbol-map'
+import { showNotification } from '@mantine/notifications'
 
 import Card from './style'
 
@@ -56,7 +57,18 @@ const Result = ({
           <Card.Rating>{stars}</Card.Rating>
         </Card.RatingBox>
         <div>
-          <Button color="orange" disabled={!available}>
+          <Button
+            color="orange"
+            disabled={!available}
+            onClick={() =>
+              showNotification({
+                title: 'Hang on tight',
+                message: 'We are still implementing booking yet!',
+                autoClose: 2000,
+                color: 'red',
+              })
+            }
+          >
             Book Now
           </Button>
         </div>
