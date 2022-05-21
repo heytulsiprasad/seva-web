@@ -11,7 +11,7 @@ export const results = [
     stars: 4,
     maxStars: 5,
     available: true,
-    currency: 'INR',
+    currencyCode: 'INR',
   },
   {
     id: 1,
@@ -25,6 +25,6 @@ export const results = [
     stars: 4.5,
     maxStars: 5,
     available: true,
-    currency: 'INR',
+    currencyCode: 'USD',
   },
 ]

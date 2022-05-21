@@ -20,7 +20,7 @@ const Results = ({ results }) => {
           location,
           stars,
           available,
-          currency,
+          currencyCode,
         }) => (
           <Result
             key={id}
@@ -32,7 +32,7 @@ const Results = ({ results }) => {
             location={location}
             stars={stars}
             available={available}
-            currency={currency}
+            currencyCode={currencyCode}
           />
         )
       )}

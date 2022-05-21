@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { Text, Button, Box } from '@mantine/core'
 import { Star } from 'tabler-icons-react'
+import getSymbolFromCurrency from 'currency-symbol-map'
 
 import Card from './style'
 
@@ -14,7 +15,7 @@ const Result = ({
   location,
   stars,
   available,
-  currency,
+  currencyCode,
 }) => (
   <Card.Container>
     <Card.LeftBox>
@@ -35,7 +36,9 @@ const Result = ({
         <Card.InfoBox>
           <Box sx={{ flexBasis: '50%' }}>
             <Card.InfoHeading>Minimum Charge</Card.InfoHeading>
-            <Card.InfoLabel>{minCharge}</Card.InfoLabel>
+            <Card.InfoLabel>
+              {getSymbolFromCurrency(currencyCode)} {minCharge}
+            </Card.InfoLabel>
           </Box>
           <Box>
             <Card.InfoHeading>Timing</Card.InfoHeading>
