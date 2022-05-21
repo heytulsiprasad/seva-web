@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, Badge, Select, Text } from '@mantine/core'
+import { Input, Badge, Select, Text, TextInput } from '@mantine/core'
 import { Search, Filter } from 'tabler-icons-react'
 
 // styles
@@ -11,13 +11,20 @@ import {
   SearchMetadata,
 } from './style'
 
-const SearchComponent = ({ searchBy, setSearchBy }) => {
+const SearchComponent = ({
+  searchBy,
+  setSearchBy,
+  searchText,
+  setSearchText,
+}) => {
   return (
     <UserControls>
       <InputBox>
-        <Input
+        <TextInput
           size="lg"
           radius="md"
+          value={searchText}
+          onChange={(event) => setSearchText(event.currentTarget.value)}
           icon={<Search size={24} strokeWidth={1} />}
           placeholder="Search for doctors or hospitals near by"
         />
