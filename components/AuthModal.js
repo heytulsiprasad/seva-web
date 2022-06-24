@@ -56,7 +56,7 @@ const AuthModal = ({ opened, setOpened, modalType, setModalType }) => {
               }}
               onClick={() => setModalType('register')}
             >
-              Don't have an account? Register
+              Don&#39;t have an account? Register
             </Text>
             <Button>Login</Button>
           </Group>
