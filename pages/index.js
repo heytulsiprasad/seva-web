@@ -12,7 +12,7 @@ import { results as data } from '../utils/data'
 
 function Home() {
   const [searchBy, setSearchBy] = useState('all')
-  const [searchText, setSearchText] = useState(null)
+  const [searchText, setSearchText] = useState('')
   const [results, setResults] = useState([])
 
   useEffect(() => {
