@@ -10,11 +10,19 @@ import {
   Box,
 } from '@mantine/core'
 import { Mail, Lock, BrandGoogle, BrandTwitter } from 'tabler-icons-react'
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  TwitterAuthProvider,
+  GoogleAuthProvider,
+} from 'firebase/auth'
+import { useAuth } from '../../config/store'
 
 const RegisterModal = ({ opened, setOpened, setModalType }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const setCurrentUser = useAuth((state) => state.setCurrentUser)
 
   const onRegisterHandler = (e) => {
     e.preventDefault()
@@ -26,6 +34,8 @@ const RegisterModal = ({ opened, setOpened, setModalType }) => {
         .then((userCredential) => {
           const user = userCredential.user
           console.log({ user })
+
+          setCurrentUser({ currentUser: user })
         })
         .catch((error) => {
           console.error(error)
@@ -36,6 +46,46 @@ const RegisterModal = ({ opened, setOpened, setModalType }) => {
           setOpened(false)
         })
     }
+  }
+
+  const registerWithGoogle = () => {
+    const provider = new GoogleAuthProvider()
+
+    const auth = getAuth()
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user
+        console.log(user)
+
+        setCurrentUser({ currentUser: user })
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+      .finally(() => {
+        setOpened(false)
+      })
+  }
+
+  const registerWithTwitter = () => {
+    const provider = new TwitterAuthProvider()
+
+    const auth = getAuth()
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user
+        console.log(user)
+
+        setCurrentUser({ currentUser: user })
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+      .finally(() => {
+        setOpened(false)
+      })
   }
 
   return (
@@ -58,7 +108,7 @@ const RegisterModal = ({ opened, setOpened, setModalType }) => {
           />
           <TextInput
             placeholder="Password"
-            label="Passowrd"
+            label="Password"
             type="password"
             required
             icon={<Lock size={14} />}
@@ -89,10 +139,10 @@ const RegisterModal = ({ opened, setOpened, setModalType }) => {
           or continue with these social profiles
         </Text>
         <Group position="center" spacing="xl">
-          <Box>
+          <Box onClick={registerWithGoogle} sx={{ cursor: 'pointer' }}>
             <BrandGoogle alt={20} />
           </Box>
-          <Box>
+          <Box onClick={registerWithTwitter} sx={{ cursor: 'pointer' }}>
             <BrandTwitter alt={20} />
           </Box>
         </Group>

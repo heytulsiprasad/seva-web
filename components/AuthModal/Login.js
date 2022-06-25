@@ -10,11 +10,20 @@ import {
   Box,
 } from '@mantine/core'
 import { Mail, Lock, BrandGoogle, BrandTwitter } from 'tabler-icons-react'
-import { signInWithEmailAndPassword, getAuth } from 'firebase/auth'
+import {
+  signInWithEmailAndPassword,
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  TwitterAuthProvider,
+} from 'firebase/auth'
+import { useAuth } from '../../config/store'
 
 const LoginModal = ({ opened, setOpened, setModalType }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const setCurrentUser = useAuth((state) => state.setCurrentUser)
 
   const onLoginHandler = (e) => {
     e.preventDefault()
@@ -24,10 +33,9 @@ const LoginModal = ({ opened, setOpened, setModalType }) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user
-
         console.log(user)
 
-        console.log({ email, password })
+        setCurrentUser({ currentUser: user })
       })
       .catch((error) => {
         console.error(error)
@@ -35,6 +43,46 @@ const LoginModal = ({ opened, setOpened, setModalType }) => {
       .finally(() => {
         setEmail('')
         setPassword('')
+        setOpened(false)
+      })
+  }
+
+  const loginWithGoogle = () => {
+    const provider = new GoogleAuthProvider()
+
+    const auth = getAuth()
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user
+        console.log(user)
+
+        setCurrentUser({ currentUser: user })
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+      .finally(() => {
+        setOpened(false)
+      })
+  }
+
+  const loginWithTwitter = () => {
+    const provider = new TwitterAuthProvider()
+
+    const auth = getAuth()
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user
+        console.log(user)
+
+        setCurrentUser({ currentUser: user })
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+      .finally(() => {
         setOpened(false)
       })
   }
@@ -59,7 +107,7 @@ const LoginModal = ({ opened, setOpened, setModalType }) => {
           />
           <TextInput
             placeholder="Password"
-            label="Passowrd"
+            label="Password"
             type="password"
             required
             icon={<Lock size={14} />}
@@ -90,10 +138,10 @@ const LoginModal = ({ opened, setOpened, setModalType }) => {
           or continue with these social profiles
         </Text>
         <Group position="center" spacing="xl">
-          <Box>
+          <Box onClick={loginWithGoogle} sx={{ cursor: 'pointer' }}>
             <BrandGoogle alt={20} />
           </Box>
-          <Box>
+          <Box onClick={loginWithTwitter} sx={{ cursor: 'pointer' }}>
             <BrandTwitter alt={20} />
           </Box>
         </Group>
