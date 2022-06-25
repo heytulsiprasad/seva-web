@@ -3,8 +3,6 @@ import Login from './Login'
 import Register from './Register'
 
 const AuthModal = ({ opened, setOpened, modalType, setModalType }) => {
-  console.log({ modalType })
-
   if (modalType === 'login') {
     return (
       <Login

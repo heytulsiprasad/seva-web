@@ -1,15 +1,9 @@
 import React from 'react'
-import { Input, Badge, Select, Text, TextInput } from '@mantine/core'
+import { Select, TextInput } from '@mantine/core'
 import { Search, Filter } from 'tabler-icons-react'
 
 // styles
-import {
-  SearchBox,
-  SelectBox,
-  InputBox,
-  UserControls,
-  SearchMetadata,
-} from './style'
+import { SelectBox, InputBox, UserControls } from './style'
 
 const SearchComponent = ({
   searchBy,

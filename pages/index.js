@@ -1,13 +1,10 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
 import Hero from '../components/Hero'
-import InfoCards from '../components/InfoCards'
 import Search from '../components/Search'
 import Results from '../components/Results'
 import SearchMetadata from '../components/Search/Metadata'
-import styles from '../styles/Home.module.css'
 import { results as data } from '../utils/data'
 
 function Home() {
