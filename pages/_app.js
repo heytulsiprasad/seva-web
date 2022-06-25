@@ -8,6 +8,7 @@ import '../styles/hero.css'
 import styled from 'styled-components'
 import { MantineProvider } from '@mantine/core'
 import { NotificationsProvider } from '@mantine/notifications'
+import '../firebase/index'
 
 const Container = styled.main`
   flex: 1;
