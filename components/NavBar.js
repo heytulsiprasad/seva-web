@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Button } from '@mantine/core'
 
 // Components
-import AuthModal from './AuthModal'
+import AuthModal from './AuthModal/index'
 
 const NavBar = () => {
   const [isNavExpanded, setIsNavExpanded] = useState(false)
