@@ -14,7 +14,7 @@ const NavBar = () => {
   const [modalType, setModalType] = useState('login') // login or register
 
   const isAuthenticated = useAuth((state) => state.isAuthenticated)
-  const { photoURL } = useAuth((state) => state.currentUser)
+  const currentUser = useAuth((state) => state.currentUser)
 
   return (
     <>
@@ -106,7 +106,11 @@ const NavBar = () => {
                 </li>
               </>
             ) : (
-              <Avatar src={photoURL} radius="xl" sx={{ cursor: 'pointer' }} />
+              <Avatar
+                src={currentUser.photoURL}
+                radius="xl"
+                sx={{ cursor: 'pointer' }}
+              />
             )}
           </ul>
         </div>
