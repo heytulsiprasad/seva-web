@@ -11,5 +11,11 @@ export const useAuth = create(
         isAuthenticated: params.isAuthenticated,
       }))
     },
+    clearCurrentUser: () => {
+      set((state) => ({
+        currentUser: {},
+        isAuthenticated: false,
+      }))
+    },
   }))
 )

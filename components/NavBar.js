@@ -1,6 +1,9 @@
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Button, Avatar } from '@mantine/core'
+import styled from 'styled-components'
+import { getAuth, signOut } from 'firebase/auth'
+import { Logout, Pacman } from 'tabler-icons-react'
 
 // Components
 import AuthModal from './AuthModal/index'
@@ -9,12 +12,54 @@ import AuthModal from './AuthModal/index'
 import { useAuth } from '../config/store'
 
 const NavBar = () => {
+  const dropdownRef = useRef(null)
+  const [isOpen, setIsOpen] = useState(false)
+  const toggleDropdown = () => setIsOpen(!isOpen)
+
   const [isNavExpanded, setIsNavExpanded] = useState(false)
   const [opened, setOpened] = useState(false)
   const [modalType, setModalType] = useState('login') // login or register
 
   const isAuthenticated = useAuth((state) => state.isAuthenticated)
   const currentUser = useAuth((state) => state.currentUser)
+  const clearCurrentUser = useAuth((state) => state.clearCurrentUser)
+
+  const logoutHandler = () => {
+    toggleDropdown()
+
+    const auth = getAuth()
+
+    signOut(auth)
+      .then(() => {
+        clearCurrentUser()
+        console.log('Sign out successfull')
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  // Change state when clicked outside of dropdown
+  useEffect(() => {
+    if (isOpen) {
+      const handleClickOutside = (event) => {
+        if (
+          dropdownRef.current &&
+          !dropdownRef.current.contains(event.target)
+        ) {
+          setIsOpen(false)
+        }
+      }
+
+      // Add event listener
+      document.addEventListener('mousedown', handleClickOutside)
+
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener('mousedown', handleClickOutside)
+      }
+    }
+  }, [dropdownRef, isOpen])
 
   return (
     <>
@@ -106,11 +151,30 @@ const NavBar = () => {
                 </li>
               </>
             ) : (
-              <Avatar
-                src={currentUser.photoURL}
-                radius="xl"
-                sx={{ cursor: 'pointer' }}
-              />
+              <AvatarContainer ref={dropdownRef}>
+                <Avatar
+                  src={currentUser.photoURL}
+                  radius="xl"
+                  sx={{ cursor: 'pointer' }}
+                  onClick={toggleDropdown}
+                />
+                {isOpen && (
+                  <Dropdown>
+                    <div className="option" onClick={() => logoutHandler()}>
+                      <div className="option__icon">
+                        <Logout size={24} />
+                      </div>
+                      <span>Log out</span>
+                    </div>
+                    <div className="option" onClick={() => logoutHandler()}>
+                      <div className="option__icon">
+                        <Pacman size={24} />
+                      </div>
+                      <span>Profile</span>
+                    </div>
+                  </Dropdown>
+                )}
+              </AvatarContainer>
             )}
           </ul>
         </div>
@@ -124,5 +188,46 @@ const NavBar = () => {
     </>
   )
 }
+
+const AvatarContainer = styled.div`
+  position: relative;
+`
+
+const Dropdown = styled.div`
+  position: absolute;
+  width: max-content;
+  right: 0px;
+  margin-top: 15px;
+  padding: 4px;
+  border: 1px solid rgb(224, 224, 224);
+  box-shadow: rgb(0 0 0 / 5%) 0px 2px 4px;
+  border-radius: 12px;
+
+  .option {
+    padding: 5px 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    &:hover {
+      background: rgb(242, 242, 242);
+      cursor: pointer;
+    }
+
+    span {
+      font-weight: 600;
+      font-size: 14px;
+    }
+  }
+
+  .option__icon {
+    margin-right: 10px;
+
+    svg {
+      display: block;
+    }
+  }
+`
 
 export default NavBar
