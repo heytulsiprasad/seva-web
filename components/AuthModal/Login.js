@@ -35,7 +35,7 @@ const LoginModal = ({ opened, setOpened, setModalType }) => {
         const user = userCredential.user
         console.log(user)
 
-        setCurrentUser({ currentUser: user })
+        setCurrentUser({ currentUser: user, isAuthenticated: true })
       })
       .catch((error) => {
         console.error(error)
@@ -57,7 +57,7 @@ const LoginModal = ({ opened, setOpened, setModalType }) => {
         const user = result.user
         console.log(user)
 
-        setCurrentUser({ currentUser: user })
+        setCurrentUser({ currentUser: user, isAuthenticated: true })
       })
       .catch((error) => {
         console.error(error)
@@ -77,7 +77,7 @@ const LoginModal = ({ opened, setOpened, setModalType }) => {
         const user = result.user
         console.log(user)
 
-        setCurrentUser({ currentUser: user })
+        setCurrentUser({ currentUser: user, isAuthenticated: true })
       })
       .catch((error) => {
         console.error(error)

@@ -1,14 +1,20 @@
 import Link from 'next/link'
 import { useState } from 'react'
-import { Button } from '@mantine/core'
+import { Button, Avatar } from '@mantine/core'
 
 // Components
 import AuthModal from './AuthModal/index'
+
+// Store
+import { useAuth } from '../config/store'
 
 const NavBar = () => {
   const [isNavExpanded, setIsNavExpanded] = useState(false)
   const [opened, setOpened] = useState(false)
   const [modalType, setModalType] = useState('login') // login or register
+
+  const isAuthenticated = useAuth((state) => state.isAuthenticated)
+  const { photoURL } = useAuth((state) => state.currentUser)
 
   return (
     <>
@@ -73,29 +79,35 @@ const NavBar = () => {
                 </Link>
               </Button>
             </li>
-            <li>
-              <Button
-                variant="subtle"
-                color="orange"
-                onClick={() => {
-                  setOpened(true)
-                  setModalType('login')
-                }}
-              >
-                Log In
-              </Button>
-            </li>
-            <li>
-              <Button
-                color="orange"
-                onClick={() => {
-                  setOpened(true)
-                  setModalType('register')
-                }}
-              >
-                Sign Up
-              </Button>
-            </li>
+            {!isAuthenticated ? (
+              <>
+                <li>
+                  <Button
+                    variant="subtle"
+                    color="orange"
+                    onClick={() => {
+                      setOpened(true)
+                      setModalType('login')
+                    }}
+                  >
+                    Log In
+                  </Button>
+                </li>
+                <li>
+                  <Button
+                    color="orange"
+                    onClick={() => {
+                      setOpened(true)
+                      setModalType('register')
+                    }}
+                  >
+                    Sign Up
+                  </Button>
+                </li>
+              </>
+            ) : (
+              <Avatar src={photoURL} radius="xl" sx={{ cursor: 'pointer' }} />
+            )}
           </ul>
         </div>
       </nav>
