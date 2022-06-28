@@ -84,3 +84,5 @@ export const results = [
     currencyCode: 'INR',
   },
 ]
+
+export const hospitaltext = 'Loreto is a city on Mexico’s Baja California Peninsula, on the Gulf of California. Its colonial buildings include the Misión de Nuestra Señora de Loreto, a 17th-century church. Off the coast, the islands and waters of Bahía de Loreto National Park are home to dolphins, whales and pelicans. The city is backed by the Sierra de la Giganta mountain range, where trails lead to prehistoric cave paintings.'

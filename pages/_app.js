@@ -4,6 +4,8 @@ import '../styles/navbar.css'
 import '../styles/footer.css'
 import '../styles/infocards.css'
 import '../styles/hero.css'
+import '../styles/button.css'
+import '../styles/hospitalpage.css'
 
 import styled from 'styled-components'
 import { MantineProvider } from '@mantine/core'

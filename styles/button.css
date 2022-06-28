@@ -1,0 +1,47 @@
+.my-custom-button {
+  padding: 8px 16px;
+  gap: 8px;
+
+  width: 101px;
+  height: 35px;
+
+  background: #ff792e;
+  border-radius: 4px;
+  color: #ffffff;
+}
+
+.my-custom-button2 {
+  align-items: center;
+  padding: 8px;
+  padding-left: 20px;
+  gap: 8px;
+
+  width: 120px;
+  height: 44px;
+
+  background: #ff792e;
+  border-radius: 4px;
+
+  font-size: 16;
+  color: #ffffff;
+  font-weight: '600';
+}
+
+.my-custom-button3 {
+  align-items: center;
+  padding: 8px;
+  padding-left: 25px;
+  gap: 8px;
+
+  width: 120px;
+  height: 44px;
+
+  background: #ffffff;
+  /* border-color: #ff792e; */
+  border: 1px solid #ff792e;
+  border-radius: 4px;
+
+  font-size: 16;
+  color: #ff792e;
+  font-weight: '600';
+}

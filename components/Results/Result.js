@@ -6,6 +6,7 @@ import getSymbolFromCurrency from 'currency-symbol-map'
 import { showNotification } from '@mantine/notifications'
 
 import Card from './style'
+import Link from 'next/link'
 
 const Result = ({
   title,
@@ -57,7 +58,7 @@ const Result = ({
           <Card.Rating>{stars}</Card.Rating>
         </Card.RatingBox>
         <div>
-          <Button
+          {/* <Button
             color="orange"
             disabled={!available}
             onClick={() =>
@@ -70,7 +71,10 @@ const Result = ({
             }
           >
             Book Now
-          </Button>
+          </Button> */}
+          <Link href={`/hospital/${encodeURIComponent(title)}`}>
+            <a className='my-custom-button'>Book Now</a>
+          </Link>
         </div>
       </Card.SubmitContainer>
     </Card.RightBox>
