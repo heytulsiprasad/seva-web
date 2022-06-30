@@ -86,3 +86,32 @@ export const results = [
 ]
 
 export const hospitaltext = 'Loreto is a city on Mexico’s Baja California Peninsula, on the Gulf of California. Its colonial buildings include the Misión de Nuestra Señora de Loreto, a 17th-century church. Off the coast, the islands and waters of Bahía de Loreto National Park are home to dolphins, whales and pelicans. The city is backed by the Sierra de la Giganta mountain range, where trails lead to prehistoric cave paintings.'
+
+export const currentBooking = {
+  image: 'https://thumbs.dreamstime.com/b/hospital-building-modern-parking-lot-59693686.jpg',
+  hospitalName: 'Sikhadevi Hospital',
+  queueNum: 25,
+  timingSlot: '9:00 AM - 9:20 AM',
+}
+
+export const previousBookings = [
+  {
+    image: 'https://thumbs.dreamstime.com/b/hospital-building-modern-parking-lot-59693686.jpg',
+    hospitalName: 'Sikhadevi Hospital',
+    queueNum: 25,
+    timingSlot: '9:00 AM - 9:20 AM',
+  },
+  {
+    image: 'https://thumbs.dreamstime.com/b/hospital-building-modern-parking-lot-59693686.jpg',
+    hospitalName: 'Sikhadevi Hospital',
+    queueNum: 25,
+    timingSlot: '9:00 AM - 9:20 AM',
+  },
+  {
+    image: 'https://thumbs.dreamstime.com/b/hospital-building-modern-parking-lot-59693686.jpg',
+    hospitalName: 'Sikhadevi Hospital',
+    queueNum: 25,
+    timingSlot: '9:00 AM - 9:20 AM',
+  },
+
+]
