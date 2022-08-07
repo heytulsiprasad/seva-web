@@ -13,6 +13,7 @@ const Results = ({ results }) => {
         ({
           id,
           title,
+          slug,
           subtitle,
           image,
           minCharge,
@@ -25,6 +26,7 @@ const Results = ({ results }) => {
           <Result
             key={id}
             title={title}
+            slug={slug}
             subtitle={subtitle}
             image={image}
             minCharge={minCharge}

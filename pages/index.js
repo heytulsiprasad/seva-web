@@ -1,13 +1,13 @@
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
 
-import Hero from '../components/Hero'
-import Search from '../components/Search'
-import Results from '../components/Results'
-import SearchMetadata from '../components/Search/Metadata'
+import Hero from '../components/Home/Hero'
+import Search from '../components/Home/Search'
+import Results from '../components/Home/Results'
+import SearchMetadata from '../components/Home/Search/Metadata'
 import { results as data } from '../utils/data'
 
-function Home() {
+const Home = () => {
   const [searchBy, setSearchBy] = useState('all')
   const [searchText, setSearchText] = useState('')
   const [results, setResults] = useState([])

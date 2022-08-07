@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { Button, Text, Box } from '@mantine/core'
 
 // assets
-import HeroPng from '../../public/static/doctor-in-canvas.png'
+import HeroPng from '../../../public/static/doctor-in-canvas.png'
 
 // styles
 import Hero from './style'
