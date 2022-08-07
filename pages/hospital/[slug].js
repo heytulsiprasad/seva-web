@@ -4,12 +4,23 @@ import StarRatings from 'react-star-ratings'
 import Link from 'next/link'
 import Image from 'next/image'
 import Head from 'next/head'
-import { Button, Text, Anchor } from '@mantine/core'
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
+import {
+  Button,
+  Text,
+  Anchor,
+  Card,
+  Image as MantineImage,
+  Badge,
+  Group,
+  Grid,
+} from '@mantine/core'
+import 'react-responsive-carousel/lib/styles/carousel.min.css' // requires a loader
+import { Carousel } from 'react-responsive-carousel'
 import Hospital2 from '../../public/static/hospitals/Hospital2.jpg'
 import Hospital3 from '../../public/static/hospitals/Hospital3.jpg'
 
+import { results } from '../../utils/data'
+import { Body } from '../../components/Hospital/style'
 import { hospitaltext } from '../../utils/data'
 import HospitalImage from '../../public/static/hospitals/UPHC_Ghatikia.jpg'
 
@@ -26,20 +37,22 @@ const Hospital = () => {
       <Head>
         <title>Hospital Page - Seva</title>
       </Head>
-      <div>
-          <Carousel showArrows={true} autoPlay showThumbs={false}>
+      <Body>
+        <Carousel showArrows={true} autoPlay showThumbs={false}>
           <div>
-            <Image src={HospitalImage} />
+            <Image src={HospitalImage} alt="Image 1" />
           </div>
           <div>
-            <Image src={Hospital2} />
+            <Image src={Hospital2} alt="Image 2" />
           </div>
           <div>
-            <Image src={Hospital3} />
+            <Image src={Hospital3} alt="Image 3" />
           </div>
         </Carousel>
         <div className="hospitalmain">
-          <div style={{ fontWeight: '600', fontSize: 20 }}>ABC Hospital</div>
+          <div style={{ fontWeight: '600', fontSize: 20 }}>
+            {hospitalData.title}
+          </div>
 
           <div style={{ fontWeight: '400', fontSize: 16 }}>
             {hospitalData.subtitle}
@@ -111,7 +124,7 @@ const Hospital = () => {
               <div
                 style={{ fontSize: 32, fontWeight: '700', color: '#3D7FFF' }}
               >
-                100
+                {hospitalData.dailyPatients}
               </div>
             </div>
             <div
@@ -201,8 +214,8 @@ const Hospital = () => {
               ))}
             </Grid>
           </div>
-        </Body>
-      </div>
+        </div>
+      </Body>
     </>
   )
 }
