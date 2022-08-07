@@ -6,7 +6,6 @@ import { NotificationsProvider } from '@mantine/notifications'
 import '../styles/globals.css'
 import '../styles/navbar.css'
 import '../styles/footer.css'
-import '../styles/hospitalpage.css'
 
 import '../config/firebase'
 import Layout from '../components/Layout'

@@ -13,6 +13,23 @@ export const results = [
     maxStars: 5,
     available: true,
     currencyCode: 'INR',
+    doctors: [
+      {
+        id: 1,
+        name: 'Dr. Yannam Deepak',
+        delegation: 'Medical Officer In-Charge',
+      },
+      {
+        id: 2,
+        name: 'Dr. Basanti Mohapatra',
+        delegation: 'Obstetrics & Gynaecology Specialist',
+      },
+      {
+        id: 3,
+        name: 'Dr. Seetaram Behera',
+        delegation: 'Pediatric Specialist',
+      },
+    ],
   },
   {
     id: 4,

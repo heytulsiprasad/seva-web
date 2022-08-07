@@ -1,13 +1,9 @@
-.hospitalheroimage {
-  height: 556px;
-  width: 100%;
-  object-fit: cover;
-}
+import styled from 'styled-components'
 
-.hospitalmain {
+export const Body = styled.div`
   width: 90%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 80px;
   margin-bottom: 80px;
-}
+`

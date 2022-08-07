@@ -7,21 +7,27 @@ import Head from 'next/head'
 import { Button, Text, Anchor } from '@mantine/core'
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
-
-import { hospitaltext } from '../../utils/data'
-import HospitalImage from '../../public/static/hospitals/UPHC_Ghatikia.jpg'
 import Hospital2 from '../../public/static/hospitals/Hospital2.jpg'
 import Hospital3 from '../../public/static/hospitals/Hospital3.jpg'
 
+import { hospitaltext } from '../../utils/data'
+import HospitalImage from '../../public/static/hospitals/UPHC_Ghatikia.jpg'
+
 const Hospital = () => {
+  const router = useRouter()
+  const { slug } = router.query
+
+  const hospitalData = results.find((result) => result.slug === slug)
+
+  console.log(hospitalData)
+
   return (
     <>
       <Head>
         <title>Hospital Page - Seva</title>
       </Head>
       <div>
-
-        <Carousel showArrows={true} autoPlay showThumbs={false}>
+          <Carousel showArrows={true} autoPlay showThumbs={false}>
           <div>
             <Image src={HospitalImage} />
           </div>
@@ -36,7 +42,7 @@ const Hospital = () => {
           <div style={{ fontWeight: '600', fontSize: 20 }}>ABC Hospital</div>
 
           <div style={{ fontWeight: '400', fontSize: 16 }}>
-            ABC hospital is best in class
+            {hospitalData.subtitle}
           </div>
 
           <div
@@ -65,7 +71,7 @@ const Hospital = () => {
               <div
                 style={{ fontSize: 16, fontWeight: '600', color: '#606060' }}
               >
-                500
+                {hospitalData.minCharge}
               </div>
             </div>
             <div
@@ -85,7 +91,7 @@ const Hospital = () => {
               <div
                 style={{ fontSize: 16, fontWeight: '600', color: '#606060' }}
               >
-                9:00 AM - 10:00 PM
+                {hospitalData.timing}
               </div>
             </div>
             <div
@@ -100,12 +106,12 @@ const Hospital = () => {
               <div
                 style={{ fontSize: 12, fontWeight: '600', color: '#8D8D8D' }}
               >
-                Current Queue
+                Daily Patients
               </div>
               <div
                 style={{ fontSize: 32, fontWeight: '700', color: '#3D7FFF' }}
               >
-                24
+                100
               </div>
             </div>
             <div
@@ -130,10 +136,10 @@ const Hospital = () => {
                   marginBottom: 20,
                 }}
               >
-                Gandhi Nagar, Delhi
+                {hospitalData.location}
               </div>
               <StarRatings
-                rating={4}
+                rating={hospitalData.stars}
                 starRatedColor="#F3EA00"
                 starDimension="20px"
                 numberOfStars={5}
@@ -151,23 +157,51 @@ const Hospital = () => {
                 height: 100,
               }}
             >
-              <Link href={'/'}>
-                <Button color="orange" radius="sm" size="md">
-                  <Anchor href="https://mantine.dev/" target="_blank">
-                    Book Now
-                  </Anchor>
-                </Button>
-              </Link>
-              <Link href={'/'}>
-                <Button variant="subtle" radius="sm" size="md">
-                  <Text size="md" color="orange">
-                    See Map
-                  </Text>
-                </Button>
-              </Link>
+              <Button color="orange" radius="sm">
+                <Link href="/">Book Now</Link>
+              </Button>
+              <Button variant="light" radius="sm">
+                <Link href="">See Map</Link>
+              </Button>
             </div>
           </div>
-        </div>
+          <div>
+            <h1 style={{ marginBottom: '1rem' }}>List of all doctors</h1>
+            <Grid>
+              {hospitalData.doctors.map((doctor) => (
+                <Grid.Col key={doctor.id} span={4}>
+                  <Card shadow="sm" p="lg" radius="md" withBorder>
+                    <Card.Section>
+                      <MantineImage
+                        src="https://i.imgur.com/zHNYRjB.jpeg"
+                        height={160}
+                        alt={`Photo of ${doctor.name}`}
+                      />
+                    </Card.Section>
+
+                    <Group position="apart" mt="md" mb="xs">
+                      <Text weight={500}>{doctor.name}</Text>
+                    </Group>
+
+                    <Text size="sm" color="dimmed">
+                      {doctor.delegation}
+                    </Text>
+
+                    <Button
+                      variant="light"
+                      color="blue"
+                      fullWidth
+                      mt="md"
+                      radius="md"
+                    >
+                      <Link href="">Book now</Link>
+                    </Button>
+                  </Card>
+                </Grid.Col>
+              ))}
+            </Grid>
+          </div>
+        </Body>
       </div>
     </>
   )
