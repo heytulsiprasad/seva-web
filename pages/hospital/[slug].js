@@ -5,9 +5,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Head from 'next/head'
 import { Button, Text, Anchor } from '@mantine/core'
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 
 import { hospitaltext } from '../../utils/data'
 import HospitalImage from '../../public/static/hospitals/UPHC_Ghatikia.jpg'
+import Hospital2 from '../../public/static/hospitals/Hospital2.jpg'
+import Hospital3 from '../../public/static/hospitals/Hospital3.jpg'
 
 const Hospital = () => {
   return (
@@ -16,7 +20,18 @@ const Hospital = () => {
         <title>Hospital Page - Seva</title>
       </Head>
       <div>
-        <Image src={HospitalImage} alt="Health_Center Image" />
+
+        <Carousel showArrows={true} autoPlay showThumbs={false}>
+          <div>
+            <Image src={HospitalImage} />
+          </div>
+          <div>
+            <Image src={Hospital2} />
+          </div>
+          <div>
+            <Image src={Hospital3} />
+          </div>
+        </Carousel>
         <div className="hospitalmain">
           <div style={{ fontWeight: '600', fontSize: 20 }}>ABC Hospital</div>
 
