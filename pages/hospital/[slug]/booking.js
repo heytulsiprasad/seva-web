@@ -12,9 +12,13 @@ import {
   Grid,
   Center,
   SimpleGrid,
+  TextInput,
+  NumberInput,
+  Radio,
 } from '@mantine/core'
 import { Calendar } from '@mantine/dates'
 import dayjs from 'dayjs'
+import { useForm } from '@mantine/form'
 
 import { useStore } from '../../../config/store'
 import { results } from '../../../utils/data'
@@ -84,6 +88,8 @@ const Booking = () => {
   const [date, setDate] = useState(null)
   const [time, setTime] = useState('')
 
+  const setRecentBooking = useStore((state) => state.setRecentBooking)
+
   const hospitalData = useStore((state) => state.hospitalData)
   const setHospitalData = useStore((state) => state.setHospitalData)
   const setSelectedHospital = useStore((state) => state.setSelectedHospital)
@@ -96,7 +102,77 @@ const Booking = () => {
     setHospitalData({ hospitalData: result })
   })
 
-  if (query.doctor && query.department) {
+  const form = useForm({
+    initialValues: {
+      name: '',
+      guardian: '',
+      age: 0,
+      address: '',
+      gender: '',
+      phone: '',
+    },
+  })
+
+  console.log({ query })
+
+  if (query.time && query.date) {
+    return (
+      <Container>
+        <h1>{hospitalData?.title}</h1>
+        <h2>{query.doctor}</h2>
+        <h4>{query.department}</h4>
+        <br />
+        <h4>
+          Slot: {dayjs(query.date).format('DD MMM YYYY')} at {query.time}
+        </h4>
+        <div style={{ marginTop: '1rem' }}>
+          <form onSubmit={form.onSubmit(console.log)}>
+            <TextInput
+              label="Name"
+              placeholder="Name"
+              required
+              {...form.getInputProps('name')}
+            />
+            <TextInput
+              mt="sm"
+              label="Guardian"
+              placeholder="S/W/H/D of"
+              required
+              {...form.getInputProps('guardian')}
+            />
+            <TextInput
+              mt="sm"
+              label="Address"
+              placeholder="Address"
+              required
+              {...form.getInputProps('address')}
+            />
+            <Radio.Group
+              label="Gender"
+              required
+              {...form.getInputProps('gender')}
+            >
+              <Radio value="male" label="Male" />
+              <Radio value="female" label="Female" />
+              <Radio value="others" label="Others" />
+            </Radio.Group>
+            <NumberInput
+              mt="sm"
+              label="Age"
+              placeholder="Age"
+              min={0}
+              max={99}
+              required
+              {...form.getInputProps('age')}
+            />
+            <Button type="submit" mt="sm">
+              <Link href="/profile">Submit</Link>
+            </Button>
+          </form>
+        </div>
+      </Container>
+    )
+  } else if (query.doctor && query.department) {
     console.log({ date: dayjs(date).format('DD MMM, YYYY'), time })
 
     const doctor = hospitalData?.doctors.find(
@@ -165,7 +241,7 @@ const Booking = () => {
               </Slot>
               <Slot
                 active={time === '9:30 am'}
-                onClick={() => setTime('9:30   am')}
+                onClick={() => setTime('9:30 am')}
               >
                 9:30 am
               </Slot>
@@ -174,7 +250,15 @@ const Booking = () => {
         </BookContainer>
         <Center sx={{ marginTop: '4rem' }}>
           <Button size="xl" disabled={!date && !time}>
-            <Link href="/profile">
+            <Link
+              href={`/hospital/${hospitalData.slug}/booking?department=${
+                query.department
+              }&doctor=${encodeURIComponent(
+                doctor.name
+              )}&time=${encodeURIComponent(time)}&date=${encodeURIComponent(
+                date
+              )}`}
+            >
               {`Book an Appointment for ${dayjs(date).format(
                 'DD MMM, YYYY'
               )} at ${time}`}

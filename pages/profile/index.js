@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { currentBooking, previousBookings } from '../../utils/data'
 import { SimpleGrid } from '@mantine/core'
 
+import { useStore } from '../../config/store'
+
 // styled components
 const ProfileContainer = styled.div`
   width: 90%;
@@ -104,6 +106,8 @@ const CardMain2 = styled.div`
 
 export default function Profile() {
   console.log(currentBooking.image)
+
+  const recentBooking = useStore((state) => state.recentBooking)
 
   return (
     <ProfileContainer>
