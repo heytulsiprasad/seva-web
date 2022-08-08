@@ -9,7 +9,7 @@ import { Logout, Pacman } from 'tabler-icons-react'
 import AuthModal from './AuthModal/index'
 
 // Store
-import { useAuth } from '../config/store'
+import { useStore } from '../config/store'
 
 const NavBar = () => {
   const dropdownRef = useRef(null)
@@ -20,9 +20,9 @@ const NavBar = () => {
   const [opened, setOpened] = useState(false)
   const [modalType, setModalType] = useState('login') // login or register
 
-  const isAuthenticated = useAuth((state) => state.isAuthenticated)
-  const currentUser = useAuth((state) => state.currentUser)
-  const clearCurrentUser = useAuth((state) => state.clearCurrentUser)
+  const isAuthenticated = useStore((state) => state.isAuthenticated)
+  const currentUser = useStore((state) => state.currentUser)
+  const clearCurrentUser = useStore((state) => state.clearCurrentUser)
 
   const logoutHandler = () => {
     toggleDropdown()
@@ -66,7 +66,6 @@ const NavBar = () => {
       <nav className="navigation" style={{ alignSelf: 'flex-start' }}>
         <Link href="/">
           <a
-            className="brand-name"
             style={{
               fontWeight: '800',
               fontFamily: 'sans-serif',

@@ -1,9 +1,11 @@
-import React from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import StarRatings from 'react-star-ratings'
 import Link from 'next/link'
 import Image from 'next/image'
 import Head from 'next/head'
+import 'react-responsive-carousel/lib/styles/carousel.min.css' // requires a loader
+import { Carousel } from 'react-responsive-carousel'
 import {
   Button,
   Text,
@@ -14,23 +16,30 @@ import {
   Group,
   Grid,
 } from '@mantine/core'
-import 'react-responsive-carousel/lib/styles/carousel.min.css' // requires a loader
-import { Carousel } from 'react-responsive-carousel'
-import Hospital2 from '../../public/static/hospitals/Hospital2.jpg'
-import Hospital3 from '../../public/static/hospitals/Hospital3.jpg'
 
-import { results } from '../../utils/data'
-import { Body } from '../../components/Hospital/style'
-import { hospitaltext } from '../../utils/data'
-import HospitalImage from '../../public/static/hospitals/UPHC_Ghatikia.jpg'
+import Hospital2 from '../../../public/static/hospitals/Hospital2.jpg'
+import Hospital3 from '../../../public/static/hospitals/Hospital3.jpg'
+import { results } from '../../../utils/data'
+import { Body } from '../../../components/Hospital/style'
+import HospitalImage from '../../../public/static/hospitals/UPHC_Ghatikia.jpg'
+import { useStore } from '../../../config/store'
 
 const Hospital = () => {
   const router = useRouter()
   const { slug } = router.query
 
-  const hospitalData = results.find((result) => result.slug === slug)
+  const hospitalData = useStore((state) => state.hospitalData)
+  const setHospitalData = useStore((state) => state.setHospitalData)
+  const setSelectedHospital = useStore((state) => state.setSelectedHospital)
 
-  console.log(hospitalData)
+  // Run on initial page load
+  useEffect(() => {
+    setSelectedHospital({ selectedHospital: slug })
+
+    const result = results.find((result) => result.slug === slug)
+    setHospitalData({ hospitalData: result })
+    console.log({ result })
+  })
 
   return (
     <>
@@ -51,11 +60,11 @@ const Hospital = () => {
         </Carousel>
         <div className="hospitalmain">
           <div style={{ fontWeight: '600', fontSize: 20 }}>
-            {hospitalData.title}
+            {hospitalData?.title}
           </div>
 
           <div style={{ fontWeight: '400', fontSize: 16 }}>
-            {hospitalData.subtitle}
+            {hospitalData?.subtitle}
           </div>
 
           <div
@@ -84,7 +93,7 @@ const Hospital = () => {
               <div
                 style={{ fontSize: 16, fontWeight: '600', color: '#606060' }}
               >
-                {hospitalData.minCharge}
+                {hospitalData?.minCharge}
               </div>
             </div>
             <div
@@ -104,7 +113,7 @@ const Hospital = () => {
               <div
                 style={{ fontSize: 16, fontWeight: '600', color: '#606060' }}
               >
-                {hospitalData.timing}
+                {hospitalData?.timing}
               </div>
             </div>
             <div
@@ -124,7 +133,7 @@ const Hospital = () => {
               <div
                 style={{ fontSize: 32, fontWeight: '700', color: '#3D7FFF' }}
               >
-                {hospitalData.dailyPatients}
+                {hospitalData?.dailyPatients}
               </div>
             </div>
             <div
@@ -149,10 +158,10 @@ const Hospital = () => {
                   marginBottom: 20,
                 }}
               >
-                {hospitalData.location}
+                {hospitalData?.location}
               </div>
               <StarRatings
-                rating={hospitalData.stars}
+                rating={hospitalData?.stars}
                 starRatedColor="#F3EA00"
                 starDimension="20px"
                 numberOfStars={5}
@@ -171,7 +180,7 @@ const Hospital = () => {
               }}
             >
               <Button color="orange" radius="sm">
-                <Link href="/">Book Now</Link>
+                <Link href={`/hospital/${slug}/booking`}>Book Now</Link>
               </Button>
               <Button variant="light" radius="sm">
                 <Link href="">See Map</Link>
@@ -181,7 +190,7 @@ const Hospital = () => {
           <div>
             <h1 style={{ marginBottom: '1rem' }}>List of all doctors</h1>
             <Grid>
-              {hospitalData.doctors.map((doctor) => (
+              {hospitalData?.doctors?.map((doctor) => (
                 <Grid.Col key={doctor.id} span={4}>
                   <Card shadow="sm" p="lg" radius="md" withBorder>
                     <Card.Section>

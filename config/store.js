@@ -1,7 +1,7 @@
 import create from 'zustand'
 import { devtools } from 'zustand/middleware'
 
-export const useAuth = create(
+export const useStore = create(
   devtools((set, get) => ({
     currentUser: null,
     isAuthenticated: false,
@@ -16,6 +16,15 @@ export const useAuth = create(
         currentUser: {},
         isAuthenticated: false,
       }))
+    },
+    // Related to hospital data
+    selectedHospital: null,
+    hospitalData: {},
+    setSelectedHospital: (params) => {
+      set((state) => ({ selectedHospital: params.selectedHospital }))
+    },
+    setHospitalData: (params) => {
+      set((state) => ({ hospitalData: params.hospitalData }))
     },
   }))
 )

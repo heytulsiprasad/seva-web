@@ -17,12 +17,12 @@ import {
   TwitterAuthProvider,
   GoogleAuthProvider,
 } from 'firebase/auth'
-import { useAuth } from '../../config/store'
+import { useStore } from '../../config/store'
 
 const RegisterModal = ({ opened, setOpened, setModalType }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const setCurrentUser = useAuth((state) => state.setCurrentUser)
+  const setCurrentUser = useStore((state) => state.setCurrentUser)
 
   const onRegisterHandler = (e) => {
     e.preventDefault()

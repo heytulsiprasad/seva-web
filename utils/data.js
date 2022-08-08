@@ -19,17 +19,54 @@ export const results = [
         id: 1,
         name: 'Dr. Yannam Deepak',
         delegation: 'Medical Officer In-Charge',
+        available: true,
+        timing: [
+          { startTime: '08:00:00 AM', endTime: '11:00:00 AM' },
+          { startTime: '05:00:00 PM', endTime: '08:00:00 PM' },
+        ],
       },
       {
         id: 2,
         name: 'Dr. Basanti Mohapatra',
         delegation: 'Obstetrics & Gynaecology Specialist',
+        available: false,
+        timing: [
+          { startTime: '08:00:00 AM', endTime: '11:00:00 AM' },
+          { startTime: '05:00:00 PM', endTime: '08:00:00 PM' },
+        ],
       },
       {
         id: 3,
         name: 'Dr. Seetaram Behera',
         delegation: 'Pediatric Specialist',
+        available: false,
       },
+      {
+        id: 4,
+        name: 'Dr. Ankita Rath',
+        delegation: 'Dental Specialist',
+        available: true,
+      },
+      {
+        id: 5,
+        name: 'Dr. Dusmanta Kumar Pradhan',
+        delegation: 'Physiotherapist',
+        available: true,
+      },
+      {
+        id: 6,
+        name: 'Sarita Panda',
+        delegation: 'Dietician & Nutritionist',
+        available: true,
+      },
+    ],
+    departments: [
+      'Cardiology',
+      'Medicine',
+      'Neurology',
+      'Pediatric',
+      'Oncology',
+      'Physiotherapy',
     ],
   },
   {
@@ -97,22 +134,22 @@ export const previousBookings = [
   {
     image:
       'https://thumbs.dreamstime.com/b/hospital-building-modern-parking-lot-59693686.jpg',
-    hospitalName: 'Sikhadevi Hospital',
-    queueNum: 25,
+    hospitalName: 'UPHC Ghatikia',
+    queueNum: 19,
     timingSlot: '9:00 AM - 9:20 AM',
   },
   {
     image:
       'https://thumbs.dreamstime.com/b/hospital-building-modern-parking-lot-59693686.jpg',
-    hospitalName: 'Sikhadevi Hospital',
-    queueNum: 25,
+    hospitalName: 'UPHC Ghatikia',
+    queueNum: 21,
     timingSlot: '9:00 AM - 9:20 AM',
   },
   {
     image:
       'https://thumbs.dreamstime.com/b/hospital-building-modern-parking-lot-59693686.jpg',
-    hospitalName: 'Sikhadevi Hospital',
-    queueNum: 25,
+    hospitalName: 'UPHC Ghatikia',
+    queueNum: 46,
     timingSlot: '9:00 AM - 9:20 AM',
   },
 ]

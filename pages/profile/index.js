@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { currentBooking, previousBookings } from '../../utils/data'
+import { SimpleGrid } from '@mantine/core'
 
 // styled components
 const ProfileContainer = styled.div`
@@ -111,7 +112,7 @@ export default function Profile() {
       <CardMain>
         <CardImage src={currentBooking.image} />
         <CardInfo>
-          <HospitalName>Sikhadevi Hospital</HospitalName>
+          <HospitalName>UPHC Ghatikia</HospitalName>
           <RowDiv>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <div
@@ -146,16 +147,7 @@ export default function Profile() {
 
       <SectionHeading style={{ marginTop: 70 }}>Visit History</SectionHeading>
 
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          overflow: 'auto',
-          whiteSpace: 'nowrap',
-          width: '100%',
-          justifyContent: 'space-between',
-        }}
-      >
+      <SimpleGrid cols={2}>
         {previousBookings.map((booking, key) => {
           return (
             <CardMain2 key={key}>
@@ -215,7 +207,7 @@ export default function Profile() {
             </CardMain2>
           )
         })}
-      </div>
+      </SimpleGrid>
     </ProfileContainer>
   )
 }

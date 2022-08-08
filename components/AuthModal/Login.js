@@ -17,13 +17,13 @@ import {
   signInWithPopup,
   TwitterAuthProvider,
 } from 'firebase/auth'
-import { useAuth } from '../../config/store'
+import { useStore } from '../../config/store'
 
 const LoginModal = ({ opened, setOpened, setModalType }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const setCurrentUser = useAuth((state) => state.setCurrentUser)
+  const setCurrentUser = useStore((state) => state.setCurrentUser)
 
   const onLoginHandler = (e) => {
     e.preventDefault()
