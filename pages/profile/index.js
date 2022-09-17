@@ -4,7 +4,7 @@ import { currentBooking, previousBookings } from '../../utils/data'
 import { SimpleGrid } from '@mantine/core'
 
 import { useStore } from '../../config/store'
-
+import { mobile } from '../../Responsive'
 // styled components
 const ProfileContainer = styled.div`
   width: 90%;
@@ -26,6 +26,7 @@ const CardMain = styled.div`
   gap: 36px;
 
   width: 422px;
+${mobile({ width: '90%' })};
   height: 190px;
 
   background: #ffffff;
@@ -38,6 +39,7 @@ const CardMain = styled.div`
 
 const CardImage = styled.img`
   width: 158px;
+${mobile({ width: '40%' })};
   height: 158px;
 
   background: #e8f8ff;
@@ -93,6 +95,7 @@ const CardMain2 = styled.div`
   padding: 16px;
 
   width: 464px;
+${mobile({ width: '90%' })};
   height: 159px;
 
   background: #ffffff;
@@ -151,7 +154,7 @@ export default function Profile() {
 
       <SectionHeading style={{ marginTop: 70 }}>Visit History</SectionHeading>
 
-      <SimpleGrid cols={2}>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap' }}>
         {previousBookings.map((booking, key) => {
           return (
             <CardMain2 key={key}>
@@ -211,7 +214,7 @@ export default function Profile() {
             </CardMain2>
           )
         })}
-      </SimpleGrid>
+      </div>
     </ProfileContainer>
   )
 }

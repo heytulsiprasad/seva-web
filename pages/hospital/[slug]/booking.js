@@ -22,9 +22,11 @@ import { useForm } from '@mantine/form'
 
 import { useStore } from '../../../config/store'
 import { results } from '../../../utils/data'
-
+import { mobile } from '../../../Responsive'
 const Container = styled.main`
-  padding: 2rem 7rem;
+  /* padding: 2rem 7rem; */
+  width:90%;
+  margin: 0 auto;
 `
 
 const Department = styled.div`
@@ -35,6 +37,10 @@ const Department = styled.div`
   font-weight: normal;
   font-size: 1.15rem;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  width: 400px;
+  ${mobile({ width: '360px' })};
+  margin-bottom: 10px;
+
 
   :hover {
     box-shadow: none;
@@ -61,15 +67,39 @@ const BookContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
+  flex-wrap: wrap;
 
   h4 {
     margin: 1rem 0;
     text-align: center;
   }
+  width: 90%;
+  margin: 0 auto;
+`
 
-  div {
-    flex-basis: 50%;
-  }
+const CustomButton = styled.button`
+  width:30%;
+  ${mobile({ width: '100%' })};
+  margin:0 auto;
+  background-color: #3d7fff;
+  height: 50px;
+  padding: 4px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 20px;
+  margin-top: 20px;
+`
+
+const CustomCalender = styled.div`
+width: 30%;
+margin: 0 auto;
+${mobile({ width: '100%' })}
+`
+
+const CustomTime = styled.div`
+width: 70%;
+margin: 0 auto;
+${mobile({ width: '100%' })}
 `
 
 const Slot = styled.div`
@@ -80,6 +110,28 @@ const Slot = styled.div`
   text-align: center;
   cursor: pointer;
   background-color: ${(props) => (props.active ? '#3d7fff' : 'fff')};
+`
+
+const CustomHospitalName = styled.div`
+font-size: 50px;
+font-weight: '800';
+${mobile({ fontSize: '40px' })};
+text-align: center;
+`
+
+const CustomDepartment = styled.div`
+font-size: 30px;
+font-weight: '700';
+${mobile({ fontSize: '20px' })};
+text-align: center;
+margin-bottom: 20px;
+`
+
+const CustomDoctors = styled.div`
+/* width: 100%; */
+${mobile({ width: '100%' })}
+margin: 0 auto;
+margin-bottom: 20px;
 `
 
 const Booking = () => {
@@ -118,9 +170,9 @@ const Booking = () => {
   if (query.time && query.date) {
     return (
       <Container>
-        <h1>{hospitalData?.title}</h1>
-        <h2>{query.doctor}</h2>
-        <h4>{query.department}</h4>
+        <CustomHospitalName>{hospitalData?.title}</CustomHospitalName>
+        <CustomDepartment>{query.doctor}</CustomDepartment>
+        <CustomDepartment>{query.department}</CustomDepartment>
         <br />
         <h4>
           Slot: {dayjs(query.date).format('DD MMM YYYY')} at {query.time}
@@ -165,9 +217,9 @@ const Booking = () => {
               required
               {...form.getInputProps('age')}
             />
-            <Button type="submit" mt="sm">
+            <CustomButton type="submit">
               <Link href="/profile">Submit</Link>
-            </Button>
+            </CustomButton>
           </form>
         </div>
       </Container>
@@ -186,11 +238,11 @@ const Booking = () => {
 
     return (
       <Container>
-        <h1>{hospitalData?.title}</h1>
-        <h2>{query.doctor}</h2>
-        <h4>{query.department}</h4>
+        <CustomHospitalName>{hospitalData?.title}</CustomHospitalName>
+        <CustomDepartment>{query.doctor}</CustomDepartment>
+        <CustomDepartment>{query.department}</CustomDepartment>
         <BookContainer>
-          <div className="date-container">
+          <CustomCalender>
             <h4>Choose Date</h4>
             <Center>
               <Calendar
@@ -199,8 +251,8 @@ const Booking = () => {
                 minDate={dayjs(new Date()).toDate()}
               />
             </Center>
-          </div>
-          <div className="time-container">
+          </CustomCalender>
+          <CustomTime>
             <h4>Choose Time</h4>
             <SimpleGrid cols={2}>
               <Slot
@@ -246,35 +298,42 @@ const Booking = () => {
                 9:30 am
               </Slot>
             </SimpleGrid>
-          </div>
+          </CustomTime>
         </BookContainer>
         <Center sx={{ marginTop: '4rem' }}>
-          <Button size="xl" disabled={!date && !time}>
+          <CustomButton disabled={!date && !time}>
             <Link
-              href={`/hospital/${hospitalData.slug}/booking?department=${
-                query.department
-              }&doctor=${encodeURIComponent(
-                doctor.name
-              )}&time=${encodeURIComponent(time)}&date=${encodeURIComponent(
-                date
-              )}`}
+              href={`/hospital/${hospitalData.slug}/booking?department=${query.department
+                }&doctor=${encodeURIComponent(
+                  doctor.name
+                )}&time=${encodeURIComponent(time)}&date=${encodeURIComponent(
+                  date
+                )}`}
             >
               {`Book an Appointment for ${dayjs(date).format(
                 'DD MMM, YYYY'
               )} at ${time}`}
             </Link>
-          </Button>
+          </CustomButton>
         </Center>
       </Container>
     )
   } else if (query.department) {
     return (
       <Container>
-        <h1>{hospitalData?.title}</h1>
-        <h2>Doctors Available</h2>
-        <Grid gutter={24} sx={{ marginTop: '2rem' }}>
+        <CustomHospitalName>{hospitalData?.title}</CustomHospitalName>
+        <CustomDepartment>Doctors Available</CustomDepartment>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+          width: '90%',
+          margin: '0 auto',
+          alignItems: 'center',
+        }}>
           {hospitalData?.doctors?.map((doctor) => (
-            <Grid.Col key={doctor.id} span={4}>
+            <CustomDoctors key={doctor.id}>
               <Card shadow="sm" p="lg" radius="md" withBorder>
                 <Card.Section>
                   <Image
@@ -292,9 +351,8 @@ const Booking = () => {
                   {doctor.delegation}
                 </Text>
                 <Link
-                  href={`/hospital/${hospitalData.slug}/booking?department=${
-                    query.department
-                  }&doctor=${encodeURIComponent(doctor.name)}`}
+                  href={`/hospital/${hospitalData.slug}/booking?department=${query.department
+                    }&doctor=${encodeURIComponent(doctor.name)}`}
                 >
                   <Button
                     variant="light"
@@ -308,19 +366,19 @@ const Booking = () => {
                   </Button>
                 </Link>
               </Card>
-            </Grid.Col>
+            </CustomDoctors>
           ))}
-        </Grid>
+        </div>
       </Container>
     )
   } else {
     return (
       <Container>
-        <h1>{hospitalData?.title}</h1>
-        <h2>Departments</h2>
-        <Grid gutter={24} sx={{ marginTop: '2rem' }}>
+        <CustomHospitalName>{hospitalData?.title}</CustomHospitalName>
+        <CustomDepartment>Departments</CustomDepartment>
+        <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', margin: '0 auto', alignItems: 'center', width: '90%' }}>
           {hospitalData?.departments?.map((department, id) => (
-            <Grid.Col span={6} key={id}>
+            <div key={id}>
               <Link
                 href={`/hospital/${hospitalData.slug}/booking?department=${department}`}
               >
@@ -328,9 +386,9 @@ const Booking = () => {
                   <h4>{department}</h4>
                 </Department>
               </Link>
-            </Grid.Col>
+            </div>
           ))}
-        </Grid>
+        </div>
       </Container>
     )
   }

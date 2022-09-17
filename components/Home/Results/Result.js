@@ -37,12 +37,12 @@ const Result = ({
       </Card.HeadingContainer>
       <Card.MetaDataContainer>
         <Card.InfoBox>
-          <Box sx={{ flexBasis: '50%' }}>
+          <Card.CustomHeader>
             <Card.InfoHeading>Minimum Charge</Card.InfoHeading>
             <Card.InfoLabel>
               {getSymbolFromCurrency(currencyCode)} {minCharge}
             </Card.InfoLabel>
-          </Box>
+          </Card.CustomHeader>
           <Box>
             <Card.InfoHeading>Timing</Card.InfoHeading>
             <Card.InfoLabel>{timing}</Card.InfoLabel>

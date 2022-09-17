@@ -12,18 +12,18 @@ const HeroSection = () => {
     <Hero.Container>
       <Hero.Left>
         <Box mb={36}>
-          <Text size="lg" weight="700" sx={{ fontSize: 64, lineHeight: 1.3 }}>
+          <Hero.CustomBigText>
             Get Valuable Data that you need
-          </Text>
+          </Hero.CustomBigText>
         </Box>
         <Box mb={32}>
-          <Text size="md" weight="500">
+          <Hero.CustomSmallText>
             The data you need to protect your closed ones.
             <br />
             The one software you need.
-          </Text>
+          </Hero.CustomSmallText>
         </Box>
-        <Box>
+        <Hero.CustomButtonSection>
           <Button color="orange" radius="sm" size="md">
             <Text size="md" color="white">
               Book Now
@@ -34,7 +34,7 @@ const HeroSection = () => {
               Explore
             </Text>
           </Button>
-        </Box>
+        </Hero.CustomButtonSection>
       </Hero.Left>
       <Hero.Right>
         <Image src={HeroPng} alt="Picture of the author" />
