@@ -26,7 +26,7 @@ const CardMain = styled.div`
   gap: 36px;
 
   width: 422px;
-${mobile({ width: '90%' })};
+  ${mobile({ width: '90%' })};
   height: 190px;
 
   background: #ffffff;
@@ -39,7 +39,7 @@ ${mobile({ width: '90%' })};
 
 const CardImage = styled.img`
   width: 158px;
-${mobile({ width: '40%' })};
+  ${mobile({ width: '40%' })};
   height: 158px;
 
   background: #e8f8ff;
@@ -95,7 +95,7 @@ const CardMain2 = styled.div`
   padding: 16px;
 
   width: 464px;
-${mobile({ width: '90%' })};
+  ${mobile({ width: '90%' })};
   height: 159px;
 
   background: #ffffff;
@@ -144,7 +144,7 @@ export default function Profile() {
               <div
                 style={{ fontSize: 16, fontWeight: '700', color: '#606060' }}
               >
-                9:00 AM - 9:20 AM
+                {recentBooking.time}
               </div>
             </div>
           </RowDiv>
@@ -154,7 +154,14 @@ export default function Profile() {
 
       <SectionHeading style={{ marginTop: 70 }}>Visit History</SectionHeading>
 
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+        }}
+      >
         {previousBookings.map((booking, key) => {
           return (
             <CardMain2 key={key}>

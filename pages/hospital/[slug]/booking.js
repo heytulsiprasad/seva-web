@@ -25,7 +25,7 @@ import { results } from '../../../utils/data'
 import { mobile } from '../../../Responsive'
 const Container = styled.main`
   /* padding: 2rem 7rem; */
-  width:90%;
+  width: 90%;
   margin: 0 auto;
 `
 
@@ -40,7 +40,6 @@ const Department = styled.div`
   width: 400px;
   ${mobile({ width: '360px' })};
   margin-bottom: 10px;
-
 
   :hover {
     box-shadow: none;
@@ -78,9 +77,9 @@ const BookContainer = styled.div`
 `
 
 const CustomButton = styled.button`
-  width:30%;
+  width: 30%;
   ${mobile({ width: '100%' })};
-  margin:0 auto;
+  margin: 0 auto;
   background-color: #3d7fff;
   height: 50px;
   padding: 4px;
@@ -91,15 +90,15 @@ const CustomButton = styled.button`
 `
 
 const CustomCalender = styled.div`
-width: 30%;
-margin: 0 auto;
-${mobile({ width: '100%' })}
+  width: 30%;
+  margin: 0 auto;
+  ${mobile({ width: '100%' })}
 `
 
 const CustomTime = styled.div`
-width: 70%;
-margin: 0 auto;
-${mobile({ width: '100%' })}
+  width: 70%;
+  margin: 0 auto;
+  ${mobile({ width: '100%' })}
 `
 
 const Slot = styled.div`
@@ -113,25 +112,25 @@ const Slot = styled.div`
 `
 
 const CustomHospitalName = styled.div`
-font-size: 50px;
-font-weight: '800';
-${mobile({ fontSize: '40px' })};
-text-align: center;
+  font-size: 50px;
+  font-weight: '800';
+  ${mobile({ fontSize: '40px' })};
+  text-align: center;
 `
 
 const CustomDepartment = styled.div`
-font-size: 30px;
-font-weight: '700';
-${mobile({ fontSize: '20px' })};
-text-align: center;
-margin-bottom: 20px;
+  font-size: 30px;
+  font-weight: '700';
+  ${mobile({ fontSize: '20px' })};
+  text-align: center;
+  margin-bottom: 20px;
 `
 
 const CustomDoctors = styled.div`
-/* width: 100%; */
-${mobile({ width: '100%' })}
-margin: 0 auto;
-margin-bottom: 20px;
+  /* width: 100%; */
+  ${mobile({ width: '100%' })}
+  margin: 0 auto;
+  margin-bottom: 20px;
 `
 
 const Booking = () => {
@@ -161,7 +160,6 @@ const Booking = () => {
       age: 0,
       address: '',
       gender: '',
-      phone: '',
     },
   })
 
@@ -178,7 +176,14 @@ const Booking = () => {
           Slot: {dayjs(query.date).format('DD MMM YYYY')} at {query.time}
         </h4>
         <div style={{ marginTop: '1rem' }}>
-          <form onSubmit={form.onSubmit(console.log)}>
+          <form
+            onSubmit={form.onSubmit((values) => {
+              setRecentBooking({
+                recentBooking: { ...values, time: query.time },
+              })
+              router.push('/profile')
+            })}
+          >
             <TextInput
               label="Name"
               placeholder="Name"
@@ -217,9 +222,7 @@ const Booking = () => {
               required
               {...form.getInputProps('age')}
             />
-            <CustomButton type="submit">
-              <Link href="/profile">Submit</Link>
-            </CustomButton>
+            <CustomButton type="submit">Submit</CustomButton>
           </form>
         </div>
       </Container>
@@ -303,12 +306,13 @@ const Booking = () => {
         <Center sx={{ marginTop: '4rem' }}>
           <CustomButton disabled={!date && !time}>
             <Link
-              href={`/hospital/${hospitalData.slug}/booking?department=${query.department
-                }&doctor=${encodeURIComponent(
-                  doctor.name
-                )}&time=${encodeURIComponent(time)}&date=${encodeURIComponent(
-                  date
-                )}`}
+              href={`/hospital/${hospitalData.slug}/booking?department=${
+                query.department
+              }&doctor=${encodeURIComponent(
+                doctor.name
+              )}&time=${encodeURIComponent(time)}&date=${encodeURIComponent(
+                date
+              )}`}
             >
               {`Book an Appointment for ${dayjs(date).format(
                 'DD MMM, YYYY'
@@ -323,15 +327,17 @@ const Booking = () => {
       <Container>
         <CustomHospitalName>{hospitalData?.title}</CustomHospitalName>
         <CustomDepartment>Doctors Available</CustomDepartment>
-        <div style={{
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          justifyContent: 'space-between',
-          width: '90%',
-          margin: '0 auto',
-          alignItems: 'center',
-        }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            width: '90%',
+            margin: '0 auto',
+            alignItems: 'center',
+          }}
+        >
           {hospitalData?.doctors?.map((doctor) => (
             <CustomDoctors key={doctor.id}>
               <Card shadow="sm" p="lg" radius="md" withBorder>
@@ -351,8 +357,9 @@ const Booking = () => {
                   {doctor.delegation}
                 </Text>
                 <Link
-                  href={`/hospital/${hospitalData.slug}/booking?department=${query.department
-                    }&doctor=${encodeURIComponent(doctor.name)}`}
+                  href={`/hospital/${hospitalData.slug}/booking?department=${
+                    query.department
+                  }&doctor=${encodeURIComponent(doctor.name)}`}
                 >
                   <Button
                     variant="light"
@@ -376,7 +383,17 @@ const Booking = () => {
       <Container>
         <CustomHospitalName>{hospitalData?.title}</CustomHospitalName>
         <CustomDepartment>Departments</CustomDepartment>
-        <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', margin: '0 auto', alignItems: 'center', width: '90%' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            margin: '0 auto',
+            alignItems: 'center',
+            width: '90%',
+          }}
+        >
           {hospitalData?.departments?.map((department, id) => (
             <div key={id}>
               <Link

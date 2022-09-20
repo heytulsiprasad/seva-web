@@ -29,7 +29,7 @@ export const useStore = create(
     // Recent ticket data
     recentBooking: {},
     setRecentBooking: (params) => {
-      set((state) => ({ setRecentBooking: params.recentBooking }))
+      set((state) => ({ recentBooking: params.recentBooking }))
     },
   }))
 )
