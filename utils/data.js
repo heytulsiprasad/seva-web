@@ -1,7 +1,17 @@
+// hospitals
+// timeBlock: { startTime, endTime }
+// timing: [{ startTime, endTime }]
+
+// doctors
+// availability: { mon: false, tue: [...timing], wed: false, thurs, fri, sat, sun }
+
+// bookings
+// archived: { completed: true, date: null, timing: {} }
+// upcoming: { completed: false, date: null, timing: {} }
+
 export const results = [
   {
     id: 0,
-    type: 'hospital',
     title: 'UPHC Ghatikia',
     slug: 'uphc-ghatikia',
     subtitle: 'New hospital in town',
@@ -19,7 +29,10 @@ export const results = [
         id: 1,
         name: 'Dr. Yannam Deepak',
         delegation: 'Medical Officer In-Charge',
-        available: true,
+        available: {
+          mon: false,
+          // tue: { ... }
+        },
         timing: [
           { startTime: '08:00:00 AM', endTime: '11:00:00 AM' },
           { startTime: '05:00:00 PM', endTime: '08:00:00 PM' },
@@ -71,7 +84,6 @@ export const results = [
   },
   {
     id: 4,
-    type: 'hospital',
     title: 'Sunshine Hospital',
     slug: 'sunshine-hospital',
     subtitle: null,
@@ -87,7 +99,6 @@ export const results = [
   },
   {
     id: 5,
-    type: 'hospital',
     title: 'AIIMS Bhubaneswar',
     slug: 'aiims-bhubaneswar',
     subtitle: 'Cutting edge cancer therapy',
@@ -103,7 +114,6 @@ export const results = [
   },
   {
     id: 6,
-    type: 'hospital',
     title: 'Keeva Hospital',
     slug: 'keeva-hospital',
     subtitle: 'Cutting edge cancer therapy',

@@ -1,13 +1,15 @@
 import styled from 'styled-components'
 import { Box, Text } from '@mantine/core'
 import { mobile } from '../../../Responsive'
+
 export const ResultsContainer = styled(Box)`
-  /* padding: 4rem 8rem; */
   width: 90%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(34.5625rem, 1fr));
-  grid-gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
+  grid-gap: 1rem;
+  place-items: center;
+  padding: 2rem 0 4rem 0;
 `
 
 const Container = styled(Box)`
@@ -17,14 +19,14 @@ const Container = styled(Box)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 600px;
+  width: 500px;
   ${mobile({ width: '360px' })}
 `
 
 const CustomHeader = styled.div`
-width: 50%;
-${mobile({ width: '100%' })};
-margin-bottom: 10px;
+  width: 50%;
+  ${mobile({ width: '100%' })};
+  margin-bottom: 10px;
 `
 
 const LeftBox = styled(Box)`
@@ -116,7 +118,7 @@ const Card = {
   InfoLabel,
   RatingBox,
   Rating,
-  CustomHeader
+  CustomHeader,
 }
 
 export default Card

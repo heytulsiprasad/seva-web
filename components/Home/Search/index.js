@@ -1,18 +1,23 @@
 import React from 'react'
-import { Select, TextInput } from '@mantine/core'
+import { Select, TextInput, Button, Text } from '@mantine/core'
 import { Search, Filter } from 'tabler-icons-react'
 
 // styles
 import { SelectBox, InputBox, UserControls } from './style'
 
 const SearchComponent = ({
-  searchBy,
-  setSearchBy,
   searchText,
   setSearchText,
+  updateResults,
+  refreshResults,
 }) => {
+  const onSubmitHandler = (e) => {
+    e.preventDefault()
+    updateResults()
+  }
+
   return (
-    <UserControls>
+    <UserControls as="form" onSubmit={onSubmitHandler}>
       <InputBox>
         <TextInput
           size="lg"
@@ -24,19 +29,22 @@ const SearchComponent = ({
         />
       </InputBox>
       <SelectBox>
-        <Select
-          placeholder="Filter By"
+        <Button type="submit" color="orange" radius="sm" size="lg" mr="md">
+          <Text size="md" color="white">
+            Submit
+          </Text>
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          radius="sm"
           size="lg"
-          radius="md"
-          value={searchBy}
-          onChange={setSearchBy}
-          icon={<Filter size={24} strokeWidth={1} />}
-          data={[
-            { value: 'all', label: 'All' },
-            { value: 'hospital', label: 'Hospitals' },
-            { value: 'doctor', label: 'Doctors' },
-          ]}
-        />
+          onClick={refreshResults}
+        >
+          <Text size="md" color="dark">
+            Clear
+          </Text>
+        </Button>
       </SelectBox>
     </UserControls>
   )

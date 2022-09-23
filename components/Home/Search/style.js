@@ -1,9 +1,6 @@
 import styled from 'styled-components'
 import { Box } from '@mantine/core'
 
-// export const SearchBox = styled(Box)`
-// `
-
 export const InputBox = styled(Box)`
   flex-basis: 50%;
 `

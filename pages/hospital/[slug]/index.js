@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import StarRatings from 'react-star-ratings'
 import Link from 'next/link'
@@ -16,6 +16,7 @@ import {
   Group,
   Grid,
 } from '@mantine/core'
+import { collection, query, where, getDocs } from 'firebase/firestore'
 
 import Hospital2 from '../../../public/static/hospitals/Hospital2.jpg'
 import Hospital3 from '../../../public/static/hospitals/Hospital3.jpg'
@@ -23,6 +24,7 @@ import { results } from '../../../utils/data'
 import { Body } from '../../../components/Hospital/style'
 import HospitalImage from '../../../public/static/hospitals/UPHC_Ghatikia.jpg'
 import { useStore } from '../../../config/store'
+import { db } from '../../../config/firebase'
 
 const Hospital = () => {
   const router = useRouter()
@@ -32,14 +34,33 @@ const Hospital = () => {
   const setHospitalData = useStore((state) => state.setHospitalData)
   const setSelectedHospital = useStore((state) => state.setSelectedHospital)
 
+  const readData = useCallback(
+    async (slug) => {
+      const hospitalRef = collection(db, 'hospital')
+
+      if (slug) {
+        const q = query(hospitalRef, where('slug', '==', slug))
+
+        const querySnapshot = await getDocs(q)
+        // setSelectedHospital({ selectedHospital: slug })
+
+        querySnapshot.forEach((doc) => {
+          let data = doc.data()
+          console.log({ data })
+          setHospitalData({ hospitalData: data })
+        })
+      }
+    },
+    [setHospitalData]
+  )
+
+  // readData()
+
   // Run on initial page load
   useEffect(() => {
-    setSelectedHospital({ selectedHospital: slug })
-
-    const result = results.find((result) => result.slug === slug)
-    setHospitalData({ hospitalData: result })
-    console.log({ result })
-  })
+    readData(slug)
+    console.log('Render')
+  }, [readData, slug])
 
   return (
     <>
@@ -93,7 +114,7 @@ const Hospital = () => {
               <div
                 style={{ fontSize: 16, fontWeight: '600', color: '#606060' }}
               >
-                {hospitalData?.minCharge}
+                Rs. {hospitalData?.minCharge} /-
               </div>
             </div>
             <div

@@ -1,6 +1,14 @@
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
+import {
+  onSnapshot,
+  collection,
+  where,
+  query,
+  getDocs,
+} from 'firebase/firestore'
 
+import { db } from './../config/firebase'
 import Hero from '../components/Home/Hero'
 import Search from '../components/Home/Search'
 import Results from '../components/Home/Results'
@@ -8,42 +16,70 @@ import SearchMetadata from '../components/Home/Search/Metadata'
 import { results as data } from '../utils/data'
 
 const Home = () => {
-  const [searchBy, setSearchBy] = useState('all')
   const [searchText, setSearchText] = useState('')
   const [results, setResults] = useState([])
 
+  // Automatically syncs from backend if there's new hospitals
   useEffect(() => {
-    let newResults = data
+    const unsubscribe = onSnapshot(
+      collection(db, 'hospital'),
+      (querySnapshot) => {
+        const allHospitals = []
 
-    // Search by category
-    if (searchBy) {
-      switch (searchBy) {
-        case 'all':
-          newResults = data
-          break
-        case 'hospital':
-          newResults = data.filter((item) => item.type === 'hospital')
-          break
-        case 'doctor':
-          newResults = data.filter((item) => item.type === 'doctor')
-          break
-        default:
-          newResults = data
+        querySnapshot.forEach((doc) => {
+          if (doc.data()) {
+            allHospitals.push({ id: doc.id, ...doc.data() })
+          }
+        })
+
+        // console.log(allHospitals)
+        setResults([...allHospitals])
       }
+    )
 
-      setResults((results) => [...newResults])
-    }
+    return () => unsubscribe()
+  }, [])
 
-    // Search by text
+  // Runs on press submit
+  const updateResults = async () => {
+    const hospitalRef = collection(db, 'hospital')
+    const q = query(
+      hospitalRef,
+      where('title', '>=', searchText),
+      where('title', '<=', searchText + '\uf8ff')
+    )
+
+    onSnapshot(q, (snapshot) => {
+      let data = []
+      snapshot.docs.forEach((doc) => {
+        data.push({ ...doc.data(), id: doc.id })
+      })
+      // console.log(data)
+      setResults(data)
+    })
+  }
+
+  // Get latest hospital results on clear
+
+  // TODO: Remove auto sync code, because after refresh
+  // useEffect might not be working
+  const refreshResults = async () => {
+    const q = query(collection(db, 'hospital'), where('title', '!=', null))
+    const querySnapshot = await getDocs(q)
+
+    const newResults = []
+
     if (searchText) {
-      newResults = data.filter(
-        (item) =>
-          item.title.toLowerCase().includes(searchText.toLowerCase()) > 0
-      )
+      querySnapshot.forEach((doc) => {
+        if (doc.data()) {
+          newResults.push({ id: doc.id, ...doc.data() })
+        }
+      })
 
-      setResults((results) => [...newResults])
+      setResults(newResults)
+      setSearchText('')
     }
-  }, [searchBy, searchText])
+  }
 
   return (
     <>
@@ -54,10 +90,9 @@ const Home = () => {
       <Search
         searchText={searchText}
         setSearchText={setSearchText}
-        searchBy={searchBy}
-        setSearchBy={setSearchBy}
+        updateResults={updateResults}
+        refreshResults={refreshResults}
       />
-      <SearchMetadata searchBy={searchBy} setSearchBy={setSearchBy} />
       <Results results={results} />
     </>
   )

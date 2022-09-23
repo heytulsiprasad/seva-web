@@ -3,6 +3,7 @@ import { devtools } from 'zustand/middleware'
 
 export const useStore = create(
   devtools((set, get) => ({
+    // User store
     currentUser: null,
     isAuthenticated: false,
     setCurrentUser: (params) => {
@@ -17,7 +18,8 @@ export const useStore = create(
         isAuthenticated: false,
       }))
     },
-    // Related to hospital data
+
+    // Hospital store
     selectedHospital: null,
     hospitalData: {},
     setSelectedHospital: (params) => {
@@ -26,6 +28,7 @@ export const useStore = create(
     setHospitalData: (params) => {
       set((state) => ({ hospitalData: params.hospitalData }))
     },
+
     // Recent ticket data
     recentBooking: {},
     setRecentBooking: (params) => {
