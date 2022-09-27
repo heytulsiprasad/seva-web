@@ -8,6 +8,7 @@ import {
   getDocs,
 } from 'firebase/firestore'
 
+import { useStore } from './../config/store'
 import { db } from './../config/firebase'
 import Hero from '../components/Home/Hero'
 import Search from '../components/Home/Search'
@@ -17,7 +18,12 @@ import { results as data } from '../utils/data'
 
 const Home = () => {
   const [searchText, setSearchText] = useState('')
+
+  // TODO: Remove this state and use global state only
+  // Anti pattern: Store same data in local and global state
   const [results, setResults] = useState([])
+
+  const setAllHospitals = useStore((state) => state.setAllHospitals)
 
   // Automatically syncs from backend if there's new hospitals
   useEffect(() => {
@@ -32,13 +38,14 @@ const Home = () => {
           }
         })
 
-        // console.log(allHospitals)
+        // Store in local and global state
         setResults([...allHospitals])
+        setAllHospitals({ allHospitals })
       }
     )
 
     return () => unsubscribe()
-  }, [])
+  }, [setAllHospitals])
 
   // Runs on press submit
   const updateResults = async () => {

@@ -139,18 +139,15 @@ const Booking = () => {
   const [date, setDate] = useState(null)
   const [time, setTime] = useState('')
 
-  const setRecentBooking = useStore((state) => state.setRecentBooking)
+  const setUserBookings = useStore((state) => state.setUserBookings)
 
-  const hospitalData = useStore((state) => state.hospitalData)
-  const setHospitalData = useStore((state) => state.setHospitalData)
-  const setSelectedHospital = useStore((state) => state.setSelectedHospital)
+  const currentHospital = useStore((state) => state.currentHospital)
+  const setCurrentHospital = useStore((state) => state.setCurrentHospital)
 
   // Run on initial page load
   useEffect(() => {
-    setSelectedHospital({ selectedHospital: query.slug })
-
     const result = results.find((result) => result.slug === query.slug)
-    setHospitalData({ hospitalData: result })
+    setCurrentHospital({ currentHospital: result })
   })
 
   const form = useForm({
@@ -168,7 +165,7 @@ const Booking = () => {
   if (query.time && query.date) {
     return (
       <Container>
-        <CustomHospitalName>{hospitalData?.title}</CustomHospitalName>
+        <CustomHospitalName>{currentHospital?.title}</CustomHospitalName>
         <CustomDepartment>{query.doctor}</CustomDepartment>
         <CustomDepartment>{query.department}</CustomDepartment>
         <br />
@@ -178,7 +175,7 @@ const Booking = () => {
         <div style={{ marginTop: '1rem' }}>
           <form
             onSubmit={form.onSubmit((values) => {
-              setRecentBooking({
+              setUserBookings({
                 recentBooking: { ...values, time: query.time },
               })
               router.push('/profile')
@@ -230,7 +227,7 @@ const Booking = () => {
   } else if (query.doctor && query.department) {
     console.log({ date: dayjs(date).format('DD MMM, YYYY'), time })
 
-    const doctor = hospitalData?.doctors.find(
+    const doctor = currentHospital?.doctors.find(
       (doctor) => doctor.name === query.doctor
     )
 
@@ -241,7 +238,7 @@ const Booking = () => {
 
     return (
       <Container>
-        <CustomHospitalName>{hospitalData?.title}</CustomHospitalName>
+        <CustomHospitalName>{currentHospital?.title}</CustomHospitalName>
         <CustomDepartment>{query.doctor}</CustomDepartment>
         <CustomDepartment>{query.department}</CustomDepartment>
         <BookContainer>
@@ -306,7 +303,7 @@ const Booking = () => {
         <Center sx={{ marginTop: '4rem' }}>
           <CustomButton disabled={!date && !time}>
             <Link
-              href={`/hospital/${hospitalData.slug}/booking?department=${
+              href={`/hospital/${currentHospital.slug}/booking?department=${
                 query.department
               }&doctor=${encodeURIComponent(
                 doctor.name
@@ -325,7 +322,7 @@ const Booking = () => {
   } else if (query.department) {
     return (
       <Container>
-        <CustomHospitalName>{hospitalData?.title}</CustomHospitalName>
+        <CustomHospitalName>{currentHospital?.title}</CustomHospitalName>
         <CustomDepartment>Doctors Available</CustomDepartment>
         <div
           style={{
@@ -338,7 +335,7 @@ const Booking = () => {
             alignItems: 'center',
           }}
         >
-          {hospitalData?.doctors?.map((doctor) => (
+          {currentHospital?.doctors?.map((doctor) => (
             <CustomDoctors key={doctor.id}>
               <Card shadow="sm" p="lg" radius="md" withBorder>
                 <Card.Section>
@@ -357,7 +354,7 @@ const Booking = () => {
                   {doctor.delegation}
                 </Text>
                 <Link
-                  href={`/hospital/${hospitalData.slug}/booking?department=${
+                  href={`/hospital/${currentHospital.slug}/booking?department=${
                     query.department
                   }&doctor=${encodeURIComponent(doctor.name)}`}
                 >
@@ -381,7 +378,7 @@ const Booking = () => {
   } else {
     return (
       <Container>
-        <CustomHospitalName>{hospitalData?.title}</CustomHospitalName>
+        <CustomHospitalName>{currentHospital?.title}</CustomHospitalName>
         <CustomDepartment>Departments</CustomDepartment>
         <div
           style={{
@@ -394,10 +391,10 @@ const Booking = () => {
             width: '90%',
           }}
         >
-          {hospitalData?.departments?.map((department, id) => (
+          {currentHospital?.departments?.map((department, id) => (
             <div key={id}>
               <Link
-                href={`/hospital/${hospitalData.slug}/booking?department=${department}`}
+                href={`/hospital/${currentHospital.slug}/booking?department=${department}`}
               >
                 <Department>
                   <h4>{department}</h4>

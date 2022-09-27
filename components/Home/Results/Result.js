@@ -8,6 +8,7 @@ import Card from './style'
 import Link from 'next/link'
 
 const Result = ({
+  id,
   title,
   slug,
   subtitle,

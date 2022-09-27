@@ -3,36 +3,30 @@ import { devtools } from 'zustand/middleware'
 
 export const useStore = create(
   devtools((set, get) => ({
+    // Hospital store
+    currentHospital: {},
+    allHospitals: {},
+    setCurrentHospital: (params) => {
+      console.log(params.currentHospital)
+      set((state) => ({ currentHospital: params.currentHospital }))
+    },
+    setAllHospitals: (params) => {
+      set((state) => ({ allHospitals: params.allHospitals }))
+    },
+
     // User store
     currentUser: null,
-    isAuthenticated: false,
+    userBookings: [],
     setCurrentUser: (params) => {
       set((state) => ({
         currentUser: params.currentUser,
-        isAuthenticated: params.isAuthenticated,
       }))
+    },
+    setUserBookings: (params) => {
+      set((state) => [...state.userBookings, params.userBookings])
     },
     clearCurrentUser: () => {
-      set((state) => ({
-        currentUser: {},
-        isAuthenticated: false,
-      }))
-    },
-
-    // Hospital store
-    selectedHospital: null,
-    hospitalData: {},
-    setSelectedHospital: (params) => {
-      set((state) => ({ selectedHospital: params.selectedHospital }))
-    },
-    setHospitalData: (params) => {
-      set((state) => ({ hospitalData: params.hospitalData }))
-    },
-
-    // Recent ticket data
-    recentBooking: {},
-    setRecentBooking: (params) => {
-      set((state) => ({ recentBooking: params.recentBooking }))
+      set((state) => ({ currentUser: {} }))
     },
   }))
 )

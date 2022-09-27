@@ -24,6 +24,7 @@ const Results = ({ results }) => {
         }) => (
           <Result
             key={id}
+            id={id}
             title={title}
             slug={slug}
             subtitle={subtitle}

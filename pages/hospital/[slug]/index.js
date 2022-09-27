@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import { useRouter } from 'next/router'
 import StarRatings from 'react-star-ratings'
 import Link from 'next/link'
@@ -16,7 +16,7 @@ import {
   Group,
   Grid,
 } from '@mantine/core'
-import { collection, query, where, getDocs } from 'firebase/firestore'
+import { getDocs, query, collection, where } from 'firebase/firestore'
 
 import Hospital2 from '../../../public/static/hospitals/Hospital2.jpg'
 import Hospital3 from '../../../public/static/hospitals/Hospital3.jpg'
@@ -30,48 +30,67 @@ const Hospital = () => {
   const router = useRouter()
   const { slug } = router.query
 
-  const hospitalData = useStore((state) => state.hospitalData)
-  const setHospitalData = useStore((state) => state.setHospitalData)
-  const setSelectedHospital = useStore((state) => state.setSelectedHospital)
+  const [currentData, setCurrentData] = useState(null)
 
-  const readData = useCallback(
+  const currentHospital = useStore((state) => state.currentHospital)
+  const setCurrentHospital = useStore((state) => state.setCurrentHospital)
+
+  const fetchDoctors = useCallback(async (hospitalId) => {
+    const doctors = []
+
+    // Fetch doctors
+    const doctorsRef = collection(db, `hospital/${hospitalId}/doctors`)
+    const doctorsQuery = query(doctorsRef)
+    const querySnap = await getDocs(doctorsQuery)
+
+    querySnap.forEach((doc2, idx) => {
+      doctors.push({ id: doc2.id, ...doc2.data() })
+    })
+
+    return doctors
+  }, [])
+
+  const fetchHospital = useCallback(
     async (slug) => {
       const hospitalRef = collection(db, 'hospital')
+      const hospitalQuery = query(hospitalRef, where('slug', '==', slug))
+      const querySnapshot = await getDocs(hospitalQuery)
 
-      if (slug) {
-        const q = query(hospitalRef, where('slug', '==', slug))
+      let hospital = {}
 
-        const querySnapshot = await getDocs(q)
-        // setSelectedHospital({ selectedHospital: slug })
+      querySnapshot.forEach(async (doc) => {
+        if (doc.data()) {
+          const doctors = await fetchDoctors(doc.id)
 
-        querySnapshot.forEach((doc) => {
-          let data = doc.data()
-          console.log({ data })
-          setHospitalData({ hospitalData: data })
-        })
-      }
+          hospital = { id: doc.id, ...doc.data(), doctors }
+          console.log(hospital)
+
+          setCurrentHospital({ currentHospital: hospital })
+        }
+      })
+
+      return hospital
     },
-    [setHospitalData]
+    [fetchDoctors, setCurrentHospital]
   )
 
-  // readData()
-
-  // Run on initial page load
   useEffect(() => {
-    readData(slug)
-    console.log('Render')
-  }, [readData, slug])
+    if (slug) {
+      fetchHospital(slug)
+    }
+  }, [slug, fetchHospital])
 
   return (
     <>
       <Head>
-        <title>Hospital Page - Seva</title>
+        <title>{currentHospital?.title || 'Hospital'} - Seva</title>
       </Head>
       <Body>
         <Carousel showArrows={true} autoPlay showThumbs={false}>
           <div>
             <Image src={HospitalImage} alt="Image 1" />
           </div>
+
           <div>
             <Image src={Hospital2} alt="Image 2" />
           </div>
@@ -81,11 +100,11 @@ const Hospital = () => {
         </Carousel>
         <div className="hospitalmain">
           <div style={{ fontWeight: '600', fontSize: 20 }}>
-            {hospitalData?.title}
+            {currentHospital?.title}
           </div>
 
           <div style={{ fontWeight: '400', fontSize: 16 }}>
-            {hospitalData?.subtitle}
+            {currentHospital?.subtitle}
           </div>
 
           <div
@@ -114,7 +133,7 @@ const Hospital = () => {
               <div
                 style={{ fontSize: 16, fontWeight: '600', color: '#606060' }}
               >
-                Rs. {hospitalData?.minCharge} /-
+                Rs. {currentHospital?.minCharge} /-
               </div>
             </div>
             <div
@@ -134,7 +153,7 @@ const Hospital = () => {
               <div
                 style={{ fontSize: 16, fontWeight: '600', color: '#606060' }}
               >
-                {hospitalData?.timing}
+                {currentHospital?.timing}
               </div>
             </div>
             <div
@@ -154,7 +173,7 @@ const Hospital = () => {
               <div
                 style={{ fontSize: 32, fontWeight: '700', color: '#3D7FFF' }}
               >
-                {hospitalData?.dailyPatients}
+                {currentHospital?.dailyPatients}
               </div>
             </div>
             <div
@@ -179,10 +198,10 @@ const Hospital = () => {
                   marginBottom: 20,
                 }}
               >
-                {hospitalData?.location}
+                {currentHospital?.location}
               </div>
               <StarRatings
-                rating={hospitalData?.stars}
+                rating={currentHospital?.stars}
                 starRatedColor="#F3EA00"
                 starDimension="20px"
                 numberOfStars={5}
@@ -211,37 +230,38 @@ const Hospital = () => {
           <div>
             <h1 style={{ marginBottom: '1rem' }}>List of all doctors</h1>
             <Grid>
-              {hospitalData?.doctors?.map((doctor) => (
-                <Grid.Col key={doctor.id} span={4}>
-                  <Card shadow="sm" p="lg" radius="md" withBorder>
-                    <Card.Section>
-                      <MantineImage
-                        src="https://i.imgur.com/zHNYRjB.jpeg"
-                        height={160}
-                        alt={`Photo of ${doctor.name}`}
-                      />
-                    </Card.Section>
+              {currentHospital.doctors &&
+                currentHospital.doctors.map((doctor) => (
+                  <Grid.Col key={doctor.id} span={4}>
+                    <Card shadow="sm" p="lg" radius="md" withBorder>
+                      <Card.Section>
+                        <MantineImage
+                          src="https://i.imgur.com/zHNYRjB.jpeg"
+                          height={160}
+                          alt={`Photo of ${doctor.name}`}
+                        />
+                      </Card.Section>
 
-                    <Group position="apart" mt="md" mb="xs">
-                      <Text weight={500}>{doctor.name}</Text>
-                    </Group>
+                      <Group position="apart" mt="md" mb="xs">
+                        <Text weight={500}>{doctor.name}</Text>
+                      </Group>
 
-                    <Text size="sm" color="dimmed">
-                      {doctor.delegation}
-                    </Text>
+                      <Text size="sm" color="dimmed">
+                        {doctor.delegation}
+                      </Text>
 
-                    <Button
-                      variant="light"
-                      color="blue"
-                      fullWidth
-                      mt="md"
-                      radius="md"
-                    >
-                      <Link href="">Book now</Link>
-                    </Button>
-                  </Card>
-                </Grid.Col>
-              ))}
+                      <Button
+                        variant="light"
+                        color="blue"
+                        fullWidth
+                        mt="md"
+                        radius="md"
+                      >
+                        <Link href="">Book now</Link>
+                      </Button>
+                    </Card>
+                  </Grid.Col>
+                ))}
             </Grid>
           </div>
         </div>
