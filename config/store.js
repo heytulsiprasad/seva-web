@@ -1,5 +1,5 @@
 import create from 'zustand'
-import { devtools } from 'zustand/middleware'
+import { devtools, persist } from 'zustand/middleware'
 
 export const useStore = create(
   devtools((set, get) => ({
@@ -27,6 +27,12 @@ export const useStore = create(
     },
     clearCurrentUser: () => {
       set((state) => ({ currentUser: {} }))
+    },
+
+    // Slot booking
+    slotBooking: null,
+    setSlotBooking: (params) => {
+      set((state) => ({ slotBooking: params.slotBooking }))
     },
   }))
 )

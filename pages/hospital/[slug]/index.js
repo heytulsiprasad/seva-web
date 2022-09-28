@@ -34,6 +34,7 @@ const Hospital = () => {
 
   const currentHospital = useStore((state) => state.currentHospital)
   const setCurrentHospital = useStore((state) => state.setCurrentHospital)
+  const setSlotBooking = useStore((state) => state.setSlotBooking)
 
   const fetchDoctors = useCallback(async (hospitalId) => {
     const doctors = []
@@ -44,11 +45,27 @@ const Hospital = () => {
     const querySnap = await getDocs(doctorsQuery)
 
     querySnap.forEach((doc2, idx) => {
-      doctors.push({ id: doc2.id, ...doc2.data() })
+      doctors.push({
+        id: doc2.id,
+        ...doc2.data(),
+        available: doc2.data().available,
+      })
     })
 
     return doctors
   }, [])
+
+  const computeDepartments = (doctors) => {
+    const departments = {}
+
+    doctors.forEach((doctor) => {
+      if (!departments[doctor.department]) {
+        departments[doctor.department] = true
+      }
+    })
+
+    return Object.keys(departments)
+  }
 
   const fetchHospital = useCallback(
     async (slug) => {
@@ -61,8 +78,11 @@ const Hospital = () => {
       querySnapshot.forEach(async (doc) => {
         if (doc.data()) {
           const doctors = await fetchDoctors(doc.id)
+          const departments = computeDepartments(doctors)
 
-          hospital = { id: doc.id, ...doc.data(), doctors }
+          console.log(doctors)
+
+          hospital = { id: doc.id, ...doc.data(), doctors, departments }
           console.log(hospital)
 
           setCurrentHospital({ currentHospital: hospital })
@@ -220,7 +240,9 @@ const Hospital = () => {
               }}
             >
               <Button color="orange" radius="sm">
-                <Link href={`/hospital/${slug}/booking`}>Book Now</Link>
+                <Link href={`/hospital/${slug}/booking/department`}>
+                  Book Now
+                </Link>
               </Button>
               <Button variant="light" radius="sm">
                 <Link href="">See Map</Link>
