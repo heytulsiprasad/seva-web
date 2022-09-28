@@ -7,6 +7,7 @@ import Head from 'next/head'
 import 'react-responsive-carousel/lib/styles/carousel.min.css' // requires a loader
 import { Carousel } from 'react-responsive-carousel'
 import {
+  Box,
   Button,
   Text,
   Anchor,
@@ -106,18 +107,19 @@ const Hospital = () => {
         <title>{currentHospital?.title || 'Hospital'} - Seva</title>
       </Head>
       <Body>
-        <Carousel showArrows={true} autoPlay showThumbs={false}>
-          <div>
-            <Image src={HospitalImage} alt="Image 1" />
-          </div>
-
-          <div>
-            <Image src={Hospital2} alt="Image 2" />
-          </div>
-          <div>
-            <Image src={Hospital3} alt="Image 3" />
-          </div>
-        </Carousel>
+        <Box my={64}>
+          <Carousel showArrows={true} autoPlay showThumbs={false}>
+            {currentHospital?.image?.map((img, id) => (
+              <Image
+                key={id}
+                src={img}
+                alt={currentHospital?.title}
+                width="800"
+                height="500"
+              />
+            ))}
+          </Carousel>
+        </Box>
         <div className="hospitalmain">
           <div style={{ fontWeight: '600', fontSize: 20 }}>
             {currentHospital?.title}
@@ -258,8 +260,10 @@ const Hospital = () => {
                     <Card shadow="sm" p="lg" radius="md" withBorder>
                       <Card.Section>
                         <MantineImage
-                          src="https://i.imgur.com/zHNYRjB.jpeg"
-                          height={160}
+                          src={
+                            doctor?.image || 'https://i.imgur.com/uGXgJOY.jpeg'
+                          }
+                          height={200}
                           alt={`Photo of ${doctor.name}`}
                         />
                       </Card.Section>
@@ -279,7 +283,7 @@ const Hospital = () => {
                         mt="md"
                         radius="md"
                       >
-                        <Link href="">Book now</Link>
+                        Book now
                       </Button>
                     </Card>
                   </Grid.Col>

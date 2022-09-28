@@ -23,7 +23,9 @@ const Result = ({
     <Card.LeftBox>
       <Image
         style={{ borderRadius: 12 }}
-        src={image}
+        layout="fixed"
+        objectFit="contain"
+        src={image[0]}
         alt={title}
         height="300"
         width="225"
@@ -38,7 +40,9 @@ const Result = ({
         <Card.InfoBox>
           <Card.CustomHeader>
             <Card.InfoHeading>Minimum Charge</Card.InfoHeading>
-            <Card.InfoLabel>Rs. {minCharge} /-</Card.InfoLabel>
+            <Card.InfoLabel>
+              {minCharge > 0 ? `Rs. ${minCharge}/-` : `Free`}
+            </Card.InfoLabel>
           </Card.CustomHeader>
           <Box>
             <Card.InfoHeading>Timing</Card.InfoHeading>
