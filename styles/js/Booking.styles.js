@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import { mobile } from '../../Responsive'
 
 export const Container = styled.main`
-  /* padding: 2rem 7rem; */
   width: 90%;
   margin: 0 auto;
 `
@@ -77,6 +76,7 @@ export const CustomButton = styled.button`
   border: none;
   margin-bottom: 20px;
   margin-top: 20px;
+  cursor: pointer;
 `
 
 export const CustomCalender = styled.div`

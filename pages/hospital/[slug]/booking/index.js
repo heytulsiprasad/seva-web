@@ -72,65 +72,7 @@ const Booking = () => {
   // TODO: Probably should go to another route: ie /booking/fill-form etc
   // if (query.time && query.date) {
   //   return (
-  //     <Container>
-  //       <CustomHospitalName>{currentHospital?.title}</CustomHospitalName>
-  //       <CustomDepartment>{query.doctor}</CustomDepartment>
-  //       <CustomDepartment>{query.department}</CustomDepartment>
-  //       <br />
-  //       <h4>
-  //         Slot: {dayjs(query.date).format('DD MMM YYYY')} at {query.time}
-  //       </h4>
-  //       <div style={{ marginTop: '1rem' }}>
-  //         <form
-  //           onSubmit={form.onSubmit((values) => {
-  //             setUserBookings({
-  //               recentBooking: { ...values, time: query.time },
-  //             })
-  //             router.push('/profile')
-  //           })}
-  //         >
-  //           <TextInput
-  //             label="Name"
-  //             placeholder="Name"
-  //             required
-  //             {...form.getInputProps('name')}
-  //           />
-  //           <TextInput
-  //             mt="sm"
-  //             label="Guardian"
-  //             placeholder="S/W/H/D of"
-  //             required
-  //             {...form.getInputProps('guardian')}
-  //           />
-  //           <TextInput
-  //             mt="sm"
-  //             label="Address"
-  //             placeholder="Address"
-  //             required
-  //             {...form.getInputProps('address')}
-  //           />
-  //           <Radio.Group
-  //             label="Gender"
-  //             required
-  //             {...form.getInputProps('gender')}
-  //           >
-  //             <Radio value="male" label="Male" />
-  //             <Radio value="female" label="Female" />
-  //             <Radio value="others" label="Others" />
-  //           </Radio.Group>
-  //           <NumberInput
-  //             mt="sm"
-  //             label="Age"
-  //             placeholder="Age"
-  //             min={0}
-  //             max={99}
-  //             required
-  //             {...form.getInputProps('age')}
-  //           />
-  //           <CustomButton type="submit">Submit</CustomButton>
-  //         </form>
-  //       </div>
-  //     </Container>
+
   //   )
 
   return <h1>Hello World</h1>
