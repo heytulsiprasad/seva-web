@@ -2,14 +2,17 @@ import Link from 'next/link'
 import { useState, useRef, useEffect } from 'react'
 import { Button, Avatar } from '@mantine/core'
 import styled from 'styled-components'
-import { getAuth, signOut } from 'firebase/auth'
+import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth'
+import { doc, setDoc } from 'firebase/firestore'
 import { Logout, Pacman } from 'tabler-icons-react'
+import * as R from 'rambda'
 
 // Components
 import AuthModal from './AuthModal/index'
 
 // Store
 import { useStore } from '../config/store'
+import { db } from '../config/firebase'
 
 const NavBar = () => {
   const dropdownRef = useRef(null)
@@ -20,7 +23,6 @@ const NavBar = () => {
   const [opened, setOpened] = useState(false)
   const [modalType, setModalType] = useState('login') // login or register
 
-  const isAuthenticated = useStore((state) => state.isAuthenticated)
   const currentUser = useStore((state) => state.currentUser)
   const clearCurrentUser = useStore((state) => state.clearCurrentUser)
 
@@ -38,6 +40,26 @@ const NavBar = () => {
         console.error(error)
       })
   }
+
+  // Create entry for user in firestore
+  useEffect(() => {
+    const auth = getAuth()
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log(user, user.uid)
+        const newUser = {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+        }
+
+        setDoc(doc(db, 'users', user.uid), newUser)
+      } else {
+        console.log('User signed out')
+      }
+    })
+  }, [])
 
   // Change state when clicked outside of dropdown
   useEffect(() => {
@@ -123,7 +145,7 @@ const NavBar = () => {
                 </Link>
               </Button>
             </li>
-            {!isAuthenticated ? (
+            {R.isEmpty(currentUser) ? (
               <>
                 <li>
                   <Button

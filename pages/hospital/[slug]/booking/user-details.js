@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import {
   Box,
   Card,
@@ -14,8 +15,12 @@ import {
   NumberInput,
   Radio,
 } from '@mantine/core'
+import { showNotification } from '@mantine/notifications'
+import { X } from 'tabler-icons-react'
 import dayjs from 'dayjs'
+import { addDoc, collection, doc } from 'firebase/firestore'
 
+import { db } from '../../../../config/firebase'
 import { useStore } from '../../../../config/store'
 import {
   Container,
@@ -39,18 +44,55 @@ const initialValue = {
 }
 
 const UserDetails = () => {
+  const router = useRouter()
+
   const currentHospital = useStore((state) => state.currentHospital)
   const slotBooking = useStore((state) => state.slotBooking)
   const setSlotBooking = useStore((state) => state.setSlotBooking)
+  const setUserBookings = useStore((state) => state.setUserBookings)
+  const currentUserId = useStore((state) => state.currentUser.uid)
 
   const [formData, setFormData] = useState(initialValue)
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault()
 
-    setSlotBooking({ slotBooking: { ...slotBooking, details: formData } })
+    if (!currentUserId) {
+      showNotification({
+        title: 'Please login first',
+        message:
+          'Please login/signup in order to book slots using our application',
+        color: 'red',
+        icon: <X />,
+        autoClose: 5000,
+      })
+    } else {
+      setSlotBooking({ slotBooking: { ...slotBooking, details: formData } })
 
-    // TODO: Submit to firestore
+      // Upload data to firestore
+      console.log({ currentUserId })
+
+      const detailsRef = collection(db, `users/${currentUserId}/details`)
+      const { details, slot } = slotBooking
+
+      const docRef = await addDoc(detailsRef, {
+        ...slot,
+        ...details,
+        photoURL: currentHospital.image[0] || '',
+      })
+      console.log(`Document written with ID: `, docRef.id)
+
+      setUserBookings({
+        userBookings: {
+          ...slot,
+          ...details,
+          photoURL: currentHospital.image[0] || '',
+        },
+      })
+
+      // Successful
+      router.push('/profile')
+    }
   }
 
   return (

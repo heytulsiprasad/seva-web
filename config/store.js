@@ -15,7 +15,7 @@ export const useStore = create(
     },
 
     // User store
-    currentUser: null,
+    currentUser: {},
     userBookings: [],
     setCurrentUser: (params) => {
       set((state) => ({

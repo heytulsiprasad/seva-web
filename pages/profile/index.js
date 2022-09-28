@@ -144,7 +144,7 @@ export default function Profile() {
               <div
                 style={{ fontSize: 16, fontWeight: '700', color: '#606060' }}
               >
-                {recentBooking.time}
+                9:00 AM
               </div>
             </div>
           </RowDiv>

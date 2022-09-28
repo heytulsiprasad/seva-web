@@ -125,6 +125,7 @@ const Slot = () => {
 
     const choosenSlot = {
       timeStamp: finalSlot,
+      durationInMins: timePerSlotInMinutes,
     }
 
     console.log(choosenSlot)
@@ -139,7 +140,7 @@ const Slot = () => {
 
     // TODO: Sync to firestore
     alert(
-      `Your slot has been booked on ${dayjs(choosenSlot.timeStamp).format(
+      `You have selected a slot on ${dayjs(choosenSlot.timeStamp).format(
         'MMM D, YYYY h:mm A'
       )}`
     )
