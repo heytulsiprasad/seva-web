@@ -96,7 +96,9 @@ const UserDetails = () => {
       alert(
         `Thank you, ${slotBooking.details.name}! Your slot is booked at ${
           currentHospital.title
-        } on ${dayjs(slotBooking.slot.timeStamp).format('MMM D, YYYY h:mm A')}`
+        } on ${dayjs(slotBooking?.slot?.timeStamp).format(
+          'MMM D, YYYY h:mm A'
+        )}`
       )
       router.push('/profile')
     }
@@ -109,7 +111,7 @@ const UserDetails = () => {
       <TextL>{slotBooking?.department}</TextL>
       <br />
       <h4>
-        Slot: {dayjs(slotBooking.slot.timeStamp).format('MMM D, YYYY h:mm A')}
+        Slot: {dayjs(slotBooking?.slot?.timeStamp).format('MMM D, YYYY h:mm A')}
       </h4>
       <Box my={24}>
         <form onSubmit={submitHandler}>
