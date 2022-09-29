@@ -94,7 +94,7 @@ const UserDetails = () => {
 
       // Successful
       alert(
-        `Thank you, ${slotBooking.details.name}! Your slot is booked at ${
+        `Thank you, ${slotBooking?.details?.name}! Your slot is booked at ${
           currentHospital.title
         } on ${dayjs(slotBooking?.slot?.timeStamp).format(
           'MMM D, YYYY h:mm A'
