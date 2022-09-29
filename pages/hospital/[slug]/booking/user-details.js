@@ -108,7 +108,9 @@ const UserDetails = () => {
       <TextL>{slotBooking?.doctor?.name}</TextL>
       <TextL>{slotBooking?.department}</TextL>
       <br />
-      <h4>Slot: {dayjs(slotBooking.timeStamp).format('MMM D, YYYY h:mm A')}</h4>
+      <h4>
+        Slot: {dayjs(slotBooking.slot.timeStamp).format('MMM D, YYYY h:mm A')}
+      </h4>
       <Box my={24}>
         <form onSubmit={submitHandler}>
           <TextInput

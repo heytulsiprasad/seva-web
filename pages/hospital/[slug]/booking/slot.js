@@ -155,8 +155,8 @@ const Slot = () => {
   return (
     <Container>
       <TextXL>{currentHospital?.title}</TextXL>
-      <TextL>{slotBooking.doctor.name}</TextL>
-      <TextL>{slotBooking.doctor.department}</TextL>
+      <TextL>{slotBooking?.doctor?.name}</TextL>
+      <TextL>{slotBooking?.doctor?.department}</TextL>
       <BookContainer>
         <CustomCalender>
           <h4>Choose Date</h4>

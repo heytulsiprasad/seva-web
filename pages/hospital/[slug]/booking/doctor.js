@@ -24,7 +24,7 @@ const Doctor = () => {
   const currentHospital = useStore((state) => state.currentHospital)
   const slotBooking = useStore((state) => state.slotBooking)
   const setSlotBooking = useStore((state) => state.setSlotBooking)
-  const department = slotBooking.department
+  const department = slotBooking?.department
 
   const onSubmit = (doctor) => {
     // Persist doctor to state
