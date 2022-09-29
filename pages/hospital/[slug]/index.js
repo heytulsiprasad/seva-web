@@ -275,16 +275,6 @@ const Hospital = () => {
                       <Text size="sm" color="dimmed">
                         {doctor.delegation}
                       </Text>
-
-                      <Button
-                        variant="light"
-                        color="blue"
-                        fullWidth
-                        mt="md"
-                        radius="md"
-                      >
-                        Book now
-                      </Button>
                     </Card>
                   </Grid.Col>
                 ))}

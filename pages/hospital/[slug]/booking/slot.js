@@ -139,11 +139,6 @@ const Slot = () => {
     })
 
     // TODO: Sync to firestore
-    alert(
-      `You have selected a slot on ${dayjs(choosenSlot.timeStamp).format(
-        'MMM D, YYYY h:mm A'
-      )}`
-    )
 
     // TODO: Redirect to final screen
     router.push(`/hospital/${currentHospital.slug}/booking/user-details`)

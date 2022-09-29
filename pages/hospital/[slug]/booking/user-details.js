@@ -72,14 +72,16 @@ const UserDetails = () => {
       // Upload data to firestore
       console.log({ currentUserId })
 
-      const detailsRef = collection(db, `users/${currentUserId}/details`)
+      const detailsRef = collection(db, `users/${currentUserId}/bookings`)
       const { details, slot } = slotBooking
 
-      const docRef = await addDoc(detailsRef, {
+      const newBookedSlot = {
         ...slot,
         ...details,
         photoURL: currentHospital.image[0] || '',
-      })
+      }
+
+      const docRef = await addDoc(detailsRef, newBookedSlot)
       console.log(`Document written with ID: `, docRef.id)
 
       setUserBookings({
@@ -91,6 +93,11 @@ const UserDetails = () => {
       })
 
       // Successful
+      alert(
+        `Thank you, ${slotBooking.details.name}! Your slot is booked at ${
+          currentHospital.title
+        } on ${dayjs(slotBooking.slot.timeStamp).format('MMM D, YYYY h:mm A')}`
+      )
       router.push('/profile')
     }
   }
