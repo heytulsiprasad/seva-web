@@ -16,14 +16,10 @@ export const useStore = create(
 
     // User store
     currentUser: {},
-    userBookings: [],
     setCurrentUser: (params) => {
       set((state) => ({
         currentUser: params.currentUser,
       }))
-    },
-    setUserBookings: (params) => {
-      set((state) => [...state.userBookings, params.userBookings])
     },
     clearCurrentUser: () => {
       set((state) => ({ currentUser: {} }))

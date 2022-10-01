@@ -7,7 +7,7 @@ const Booking = () => {
   // This route doesn't need to be displayed
   // Redirect to home page
   useEffect(() => {
-    router.push(`/`)
+    router.push('/')
   })
 
   return <></>
