@@ -26,9 +26,9 @@ const Doctor = () => {
   const setSlotBooking = useStore((state) => state.setSlotBooking)
   const department = slotBooking?.department
 
-  const onSubmit = (doctor) => {
+  const onSubmit = (doctorId) => {
     // Persist doctor to state
-    setSlotBooking({ slotBooking: { ...slotBooking, doctor } })
+    setSlotBooking({ slotBooking: { ...slotBooking, doctorId } })
 
     router.push(`/hospital/${currentHospital.slug}/booking/slot`)
   }
@@ -42,7 +42,11 @@ const Doctor = () => {
           currentHospital.doctors
             .filter((item) => item.department === department)
             .map((doctor) => (
-              <DoctorCard key={doctor.id} doctor={doctor} onSubmit={onSubmit} />
+              <DoctorCard
+                key={doctor.id}
+                doctor={doctor}
+                onSubmit={() => onSubmit(doctor.id)}
+              />
             ))}
       </DoctorsContainer>
     </Container>

@@ -36,11 +36,11 @@ import {
 } from '../../../../styles/js/Booking.styles.js'
 
 const initialValue = {
-  name: '',
-  guardian: '',
-  age: 0,
-  address: '',
-  gender: '',
+  name: 'Dummy user',
+  guardian: 'Dummy guardian',
+  age: 27,
+  address: '27 was roll number of my crush',
+  gender: 'female',
 }
 
 const UserDetails = () => {
@@ -49,7 +49,6 @@ const UserDetails = () => {
   const currentHospital = useStore((state) => state.currentHospital)
   const slotBooking = useStore((state) => state.slotBooking)
   const setSlotBooking = useStore((state) => state.setSlotBooking)
-  const setUserBookings = useStore((state) => state.setUserBookings)
   const currentUserId = useStore((state) => state.currentUser.uid)
 
   const [formData, setFormData] = useState(initialValue)
@@ -70,35 +69,30 @@ const UserDetails = () => {
       setSlotBooking({ slotBooking: { ...slotBooking, details: formData } })
 
       // Upload data to firestore
-      console.log({ currentUserId })
+      const userBookingsRef = collection(db, `users/${currentUserId}/bookings`)
 
-      const detailsRef = collection(db, `users/${currentUserId}/bookings`)
-      const { details, slot } = slotBooking
+      // In the final slot object:
+      // slot specs + user details + hospital details + doctor details
+      // hospital and doctor can just be an id
+      // 💡 to prevent data repetition
 
       const newBookedSlot = {
-        ...slot,
-        ...details,
-        photoURL: currentHospital.image[0] || '',
+        ...slotBooking.slot,
+        ...formData,
+        doctorId: slotBooking.doctorId,
+        hospitalId: slotBooking.hospitalId,
       }
 
-      const docRef = await addDoc(detailsRef, newBookedSlot)
-      console.log(`Document written with ID: `, docRef.id)
+      console.log(newBookedSlot)
 
-      setUserBookings({
-        userBookings: {
-          ...slot,
-          ...details,
-          photoURL: currentHospital.image[0] || '',
-        },
-      })
+      const docRef = await addDoc(userBookingsRef, newBookedSlot)
+      console.log(`Document written with ID: `, docRef.id)
 
       // Successful
       alert(
-        `Thank you, ${slotBooking?.details?.name}! Your slot is booked at ${
+        `Thank you, ${formData.name}! Your slot is booked at ${
           currentHospital.title
-        } on ${dayjs(slotBooking?.slot?.timeStamp).format(
-          'MMM D, YYYY h:mm A'
-        )}`
+        } on ${dayjs(slotBooking.slot.timeStamp).format('MMM D, YYYY h:mm A')}`
       )
       router.push('/profile')
     }

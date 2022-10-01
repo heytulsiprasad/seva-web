@@ -22,7 +22,7 @@ const Department = () => {
     console.log('Booked Department')
 
     setSlotBooking({
-      slotBooking: { department: dept },
+      slotBooking: { department: dept, hospitalId: currentHospital.id },
     })
 
     router.push(`/hospital/${currentHospital.slug}/booking/doctor`)

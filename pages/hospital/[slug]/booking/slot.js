@@ -72,7 +72,12 @@ const Slot = () => {
 
       // Check if doctor available on that day
       // timing can be either `null` or [{ start: xxx, end: yyy }]
-      const timing = slotBooking.doctor.available[day]
+      const doctorId = slotBooking.doctorId
+
+      const doctor = currentHospital.doctors.find(
+        (doctor) => doctor.id === doctorId
+      )
+      const timing = doctor.available[day]
 
       // When timing exists, create slots
       if (timing) {
@@ -86,13 +91,13 @@ const Slot = () => {
           let newPt = startPt
 
           ;[...Array(numberOfSlots)].forEach((_) => {
-            newPt = newPt.add(timePerSlotInMinutes, 'minute')
-
             // TODO: Check if some slot' full
             timeBatches.push({
               startAt: newPt.toISOString(),
               timeStamp: newPt.format('h:mm A'),
             })
+
+            newPt = newPt.add(timePerSlotInMinutes, 'minute')
           })
         })
       }
@@ -125,7 +130,7 @@ const Slot = () => {
 
     const choosenSlot = {
       timeStamp: finalSlot,
-      durationInMins: timePerSlotInMinutes,
+      duration: timePerSlotInMinutes,
     }
 
     console.log(choosenSlot)
